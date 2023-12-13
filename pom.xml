@@ -17,6 +17,10 @@
     <packaging>pom</packaging>
 
     <name>School Manager</name>
+    <properties>
+        <junit.jupiter.version>5.10.1</junit.jupiter.version>
+        <junit.platform.version>1.10.1</junit.platform.version>
+    </properties>
 
     <modules>
         <module>school-manager-api</module>
