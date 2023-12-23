@@ -33,5 +33,45 @@
         </dependency>
     </dependencies>
 
-
+    <build>
+        <testOutputDirectory>${test.output}</testOutputDirectory>
+        <plugins>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi-generator-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>SCHOOL_MANAGER_API</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <generatorName>spring</generatorName>
+                            <inputSpec>${project.basedir}/src/main/resources/api.yml</inputSpec>
+                            <output>${project.build.directory}/generated-sources/</output>
+                            <apiPackage>com.hillel.api</apiPackage>
+                            <modelPackage>com.hillel.model</modelPackage>
+                            <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+                            <enablePostProcessFile>true</enablePostProcessFile>
+                            <configOptions>
+                                <useJakartaEe>true</useJakartaEe>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <interfaceOnly>true</interfaceOnly>
+                                <useTags>true</useTags>
+                                <dateLibrary>legacy</dateLibrary>
+                                <library>spring-boot</library>
+                                <disallowAdditionalPropertiesIfNotPresent>
+                                    false
+                                </disallowAdditionalPropertiesIfNotPresent>
+                            </configOptions>
+                            <globalProperties>
+                                <skipFormModel>false</skipFormModel>
+                            </globalProperties>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
