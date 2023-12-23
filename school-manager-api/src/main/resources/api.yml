@@ -1,0 +1,409 @@
+---
+openapi: 3.0.3
+info:
+  title: School-manager
+  description: "This is School Manager Server based on the OpenAPI 3.0 specification. "
+  version: 0.0.1
+servers:
+  - url: http://api.school.com/{apiVersion}
+    description: Main server
+    variables:
+      apiVersion:
+        default: v1
+  - url: http://localhost:{port}/api
+    description: Local server
+    variables:
+      port:
+        enum:
+          - "8080"
+          - "8098"
+        default: "8080"
+tags:
+  - name: StudentsManager
+    description: Api to manage students
+  - name: TimetableManager
+    description: Api to manage lessons timetable
+  - name: HomeworkManager
+    description: Api to manage homework
+paths:
+  /students/get:
+    get:
+      tags:
+        - StudentsManager
+      description: Returns a list of students
+      operationId: getStudents
+      responses:
+        "200":
+          description: A JSON array of students
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Student"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerError"
+  "/students/get/{id}":
+    get:
+      tags:
+        - StudentsManager
+      description: Returns a students by id
+      operationId: getStudentById
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "200":
+          description: A JSON with student
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Student"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerError"
+  /students/add:
+    post:
+      tags:
+        - StudentsManager
+      description: Create a new student
+      operationId: createStudent
+      parameters:
+        - name: X-CallbackUrl
+          in: header
+          required: false
+          description: The URL where data will be sent
+          schema:
+            type: string
+            format: uri
+            example: https://example-server.com
+      requestBody:
+        $ref: "#/components/requestBodies/StudentRequestBody"
+      callbacks:
+        sendMessage:
+          "{$request.header.X-CallbackUrl}":
+            post:
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: "#/components/schemas/Message"
+              responses:
+                "200":
+                  description: OK
+      responses:
+        "201":
+          description: New student was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Student"
+          links:
+            GetStudentById:
+              $ref: "#/components/links/GetStudentById"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerError"
+  "/students/update/{id}":
+    put:
+      tags:
+        - StudentsManager
+      description: Update student by id
+      operationId: updateStudent
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      requestBody:
+        $ref: "#/components/requestBodies/StudentRequestBody"
+      responses:
+        "200":
+          description: Student updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Student"
+          links:
+            GetStudentById:
+              $ref: "#/components/links/GetStudentById"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerError"
+  /timetable/get:
+    get:
+      tags:
+        - TimetableManager
+      description: Return a list of lessons
+      operationId: getLessons
+      parameters:
+        - $ref: "#/components/parameters/GroupParam"
+        - $ref: "#/components/parameters/SubjectParam"
+      responses:
+        "200":
+          description: A JSON array of lessons
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Lesson"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerError"
+  /timetable/add:
+    post:
+      tags:
+        - TimetableManager
+      description: Add new lesson to timetable
+      operationId: addLesson
+      requestBody:
+        $ref: "#/components/requestBodies/LessonRequestBody"
+      responses:
+        "201":
+          description: New lesson was added to the timetable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Lesson"
+          links:
+            GetLesson:
+              $ref: "#/components/links/GetLesson"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerError"
+  "/timetable/update/{id}":
+    put:
+      tags:
+        - TimetableManager
+      description: Update lesson by id
+      operationId: updateLesson
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      requestBody:
+        $ref: "#/components/requestBodies/LessonRequestBody"
+      responses:
+        "200":
+          description: Lesson updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Lesson"
+          links:
+            GetLesson:
+              $ref: "#/components/links/GetLesson"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerError"
+  /homework/get:
+    get:
+      tags:
+        - HomeworkManager
+      description: Return a list of homework
+      operationId: getHomework
+      parameters:
+        - $ref: "#/components/parameters/GroupParam"
+        - $ref: "#/components/parameters/SubjectParam"
+      responses:
+        "200":
+          description: A JSON array of homework
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Homework"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerError"
+  /homework/add:
+    post:
+      tags:
+        - HomeworkManager
+      description: Creates new homework
+      operationId: addHomework
+      requestBody:
+        $ref: "#/components/requestBodies/HomeworkRequestBody"
+      responses:
+        "201":
+          description: New homework was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Homework"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerError"
+  "/homework/update/{id}":
+    put:
+      tags:
+        - HomeworkManager
+      description: Updates homework by id
+      operationId: updateHomework
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      requestBody:
+        $ref: "#/components/requestBodies/HomeworkRequestBody"
+      responses:
+        "200":
+          description: Homework was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Homework"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerError"
+components:
+  schemas:
+    Student:
+      type: object
+      properties:
+        id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        group:
+          type: string
+    Lesson:
+      type: object
+      properties:
+        id:
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
+        group:
+          type: string
+        subject:
+          type: string
+    Homework:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        group:
+          type: string
+        subject:
+          type: string
+        deadline:
+          type: string
+          format: date
+    Message:
+      type: object
+      properties:
+        text:
+          type: string
+  parameters:
+    IdParam:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        example: 1
+    GroupParam:
+      name: group
+      in: query
+      required: false
+      description: Only lessons of this group will be selected
+      schema:
+        type: string
+        example: GM-122
+    SubjectParam:
+      name: subject
+      in: query
+      required: false
+      description: Only lessons with this subject will be selected
+      schema:
+        type: string
+        example: Math
+  responses:
+    404NotFound:
+      description: The specified resource was not found.
+    500ServerError:
+      description: |
+        The server encountered an unexpected error while processing the request.
+  requestBodies:
+    StudentRequestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Student"
+          examples:
+            StudentBodyExample:
+              $ref: "#/components/examples/StudentBody"
+    LessonRequestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Lesson"
+          examples:
+            LessonBodyExample:
+              $ref: "#/components/examples/LessonBody"
+    HomeworkRequestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Homework"
+          examples:
+            HomeworkBodyExample:
+              $ref: "#/components/examples/HomeworkBody"
+  examples:
+    StudentBody:
+      summary: Student example
+      value:
+        id: 10
+        first_name: Luke
+        last_name: Skywalker
+        group: GM-122
+    LessonBody:
+      summary: Lesson example
+      value:
+        id: 4
+        timestamp: 2023-12-23T10:46:31.086Z
+        group: GM-122
+        subject: Math
+    HomeworkBody:
+      summary: Homework example
+      value:
+        id: 42
+        name: Homework №3
+        description: |
+          Read paragraph 48 and complete tasks 1, 2, 3
+        group: GM-122
+        subject: Math
+        deadline: 2023-12-23
+  links:
+    GetStudentById:
+      operationId: getStudentById
+      parameters:
+        studentId: $response.body#/id
+      description: >
+        The `id` value returned in the response can be used as the
+        `studentId` parameter in `GET /students/get/{studentId}`.
+    GetLesson:
+      operationId: getLessons
+      parameters:
+        group: $response.body#/group
+        subject: $response.body#/subject
+      description: >
+        The `group` and `subject` values returned in the response can be
+        used as the `group` and `subject` parameters in `GET /timetable/get`.
