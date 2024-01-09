@@ -3,10 +3,11 @@ package com.hillel.multi.presentation.controllers;
 import com.hillel.api.StudentsManagerApi;
 import com.hillel.model.Message;
 import com.hillel.model.Student;
-import com.hillel.multi.service.utils.ListToResponseConverter;
-import com.hillel.multi.service.utils.CallbackHandler;
 import com.hillel.multi.service.StudentsManagerService;
+import com.hillel.multi.service.utils.CallbackHandler;
+import com.hillel.multi.service.utils.ListToResponseConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +25,6 @@ public class StudentsManagerController implements StudentsManagerApi {
     private CallbackHandler callbackHandler;
 
     private final static String SUCCESS_MSG = "Student was successfully created";
-    private final static String ERROR_MSG = "Something went wrong :(";
 
     @Override
     public ResponseEntity<List<Student>> getStudents() {
@@ -35,29 +35,23 @@ public class StudentsManagerController implements StudentsManagerApi {
     @Override
     public ResponseEntity<Student> getStudentById(Integer id) {
         Student student = studentsManagerService.getStudentById(id);
-        if (Objects.isNull(student)) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(student);
     }
 
     @Override
     public ResponseEntity<Student> createStudent(Student student, URI xCallbackUrl) {
-        ResponseEntity<Student> response = studentsManagerService.addStudent(student);
+        Student body = studentsManagerService.addStudent(student);
         if (Objects.nonNull(xCallbackUrl)) {
             Message message = new Message();
-            if (response.getStatusCode().is2xxSuccessful()) {
-                message.setText(SUCCESS_MSG);
-            } else {
-                message.setText(ERROR_MSG);
-            }
+            message.setText(SUCCESS_MSG);
             callbackHandler.sendCallback(message, xCallbackUrl);
         }
-        return response;
+        return new ResponseEntity<>(body, HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<Student> updateStudent(Integer id, Student student) {
-        return studentsManagerService.updateStudent(id, student);
+        Student body = studentsManagerService.updateStudent(id, student);
+        return new ResponseEntity<>(body, HttpStatus.OK);
     }
 }
