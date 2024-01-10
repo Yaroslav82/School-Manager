@@ -41,8 +41,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Student"
-        "404":
-          $ref: "#/components/responses/404NotFound"
         "500":
           $ref: "#/components/responses/500ServerError"
   "/students/get/{id}":
@@ -130,8 +128,6 @@ paths:
               $ref: "#/components/links/GetStudentById"
         "404":
           $ref: "#/components/responses/404NotFound"
-        "415":
-          $ref: "#/components/responses/415UnsuppotedType"
         "500":
           $ref: "#/components/responses/500ServerError"
   /timetable/get:
@@ -152,8 +148,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Lesson"
-        "404":
-          $ref: "#/components/responses/404NotFound"
         "500":
           $ref: "#/components/responses/500ServerError"
   /timetable/add:
@@ -222,8 +216,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Homework"
-        "404":
-          $ref: "#/components/responses/404NotFound"
         "500":
           $ref: "#/components/responses/500ServerError"
   /homework/add:
