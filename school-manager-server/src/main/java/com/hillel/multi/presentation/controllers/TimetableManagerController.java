@@ -3,7 +3,6 @@ package com.hillel.multi.presentation.controllers;
 import com.hillel.api.TimetableManagerApi;
 import com.hillel.model.Lesson;
 import com.hillel.multi.service.TimetableManagerService;
-import com.hillel.multi.service.utils.ListToResponseConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ public class TimetableManagerController implements TimetableManagerApi {
     @Override
     public ResponseEntity<List<Lesson>> getLessons(String group, String subject) {
         List<Lesson> lessons = timetableManagerService.getLessons(group, subject);
-        return ListToResponseConverter.convert(lessons);
+        return new ResponseEntity<>(lessons, HttpStatus.OK);
     }
 
     @Override

@@ -5,7 +5,6 @@ import com.hillel.model.Message;
 import com.hillel.model.Student;
 import com.hillel.multi.service.StudentsManagerService;
 import com.hillel.multi.service.utils.CallbackHandler;
-import com.hillel.multi.service.utils.ListToResponseConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +28,7 @@ public class StudentsManagerController implements StudentsManagerApi {
     @Override
     public ResponseEntity<List<Student>> getStudents() {
         List<Student> students = studentsManagerService.getStudents();
-        return ListToResponseConverter.convert(students);
+        return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     @Override
