@@ -280,7 +280,7 @@ components:
           type: integer
         timestamp:
           type: string
-          format: date-time
+          pattern: '^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])) (2[0-3]|[0-1]?[\d]):[0-5][\d]:[0-5][\d]$'
         group:
           type: string
         subject:
@@ -300,7 +300,7 @@ components:
           type: string
         deadline:
           type: string
-          format: date
+          pattern: '^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$'
     Message:
       type: object
       properties:
@@ -378,7 +378,7 @@ components:
       summary: Lesson example
       value:
         id: 4
-        timestamp: 2023-12-23T10:46:31.086Z
+        timestamp: '2023-12-23 10:46:31'
         group: GM-122
         subject: Math
     HomeworkBody:
@@ -390,7 +390,7 @@ components:
           Read paragraph 48 and complete tasks 1, 2, 3
         group: GM-122
         subject: Math
-        deadline: 2023-12-23
+        deadline: '2023-12-23'
   links:
     GetStudentById:
       operationId: getStudentById
