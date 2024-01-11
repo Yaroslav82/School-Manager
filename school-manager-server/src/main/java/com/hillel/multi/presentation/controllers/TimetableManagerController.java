@@ -2,9 +2,9 @@ package com.hillel.multi.presentation.controllers;
 
 import com.hillel.api.TimetableManagerApi;
 import com.hillel.model.Lesson;
-import com.hillel.multi.service.utils.ListToResponseConverter;
 import com.hillel.multi.service.TimetableManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,16 +19,18 @@ public class TimetableManagerController implements TimetableManagerApi {
     @Override
     public ResponseEntity<List<Lesson>> getLessons(String group, String subject) {
         List<Lesson> lessons = timetableManagerService.getLessons(group, subject);
-        return ListToResponseConverter.convert(lessons);
+        return new ResponseEntity<>(lessons, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Lesson> addLesson(Lesson lesson) {
-        return timetableManagerService.addLesson(lesson);
+        Lesson body = timetableManagerService.addLesson(lesson);
+        return new ResponseEntity<>(body, HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<Lesson> updateLesson(Integer id, Lesson lesson) {
-        return timetableManagerService.updateLesson(id, lesson);
+        Lesson body = timetableManagerService.updateLesson(id, lesson);
+        return new ResponseEntity<>(body, HttpStatus.OK);
     }
 }

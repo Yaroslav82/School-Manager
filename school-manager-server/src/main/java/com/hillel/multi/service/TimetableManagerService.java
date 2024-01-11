@@ -1,11 +1,12 @@
 package com.hillel.multi.service;
 
 import com.hillel.model.Lesson;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.hillel.multi.configuration.exceptions.MediaTypeException;
+import com.hillel.multi.configuration.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class TimetableManagerService {
@@ -14,11 +15,21 @@ public class TimetableManagerService {
         return null;
     }
 
-    public ResponseEntity<Lesson> addLesson(Lesson lesson) {
-        return new ResponseEntity<>(lesson, HttpStatus.CREATED);
+    public Lesson addLesson(Lesson lesson) {
+        // Example of using exception
+        if (Objects.isNull(lesson.getSubject())) {
+            throw new MediaTypeException("Subject can not be null");
+        }
+
+        return lesson;
     }
 
-    public ResponseEntity<Lesson> updateLesson(Integer id, Lesson lesson) {
-        return new ResponseEntity<>(lesson, HttpStatus.OK);
+    public Lesson updateLesson(Integer id, Lesson lesson) {
+        // Example of using exception
+        if (id < 0) {
+            throw new NotFoundException("Lesson with id " + id + " is not found.");
+        }
+
+        return lesson;
     }
 }
