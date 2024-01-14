@@ -24,7 +24,7 @@ public class Lesson {
     @Column(name = "timestamp")
     private String timestamp;
 
-    @Column(name = "group")
+    @Column(name = "group_name")
     private String group;
 
     @Column(name = "subject")
