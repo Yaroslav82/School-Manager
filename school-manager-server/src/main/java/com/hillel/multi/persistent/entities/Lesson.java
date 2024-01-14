@@ -2,10 +2,14 @@ package com.hillel.multi.persistent.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+import java.util.Objects;
+
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -25,4 +29,17 @@ public class Lesson {
 
     @Column(name = "subject")
     private String subject;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Lesson lesson = (Lesson) o;
+        return Objects.equals(timestamp, lesson.timestamp) && Objects.equals(group, lesson.group) && Objects.equals(subject, lesson.subject);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(timestamp, group, subject);
+    }
 }
