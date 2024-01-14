@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -29,6 +30,14 @@ public class Student {
 
     @Column(name = "group")
     private String group;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "student_homework_ref",
+            joinColumns = @JoinColumn(name = "id1", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id2", referencedColumnName = "id")
+    )
+    private Set<Homework> homeworks;
 
     @Override
     public boolean equals(Object o) {

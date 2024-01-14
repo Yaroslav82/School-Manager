@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -35,6 +36,9 @@ public class Homework {
 
     @Column(name = "deadline")
     private String deadline;
+
+    @ManyToMany(mappedBy = "homeworks")
+    private Set<Student> students;
 
     @Override
     public boolean equals(Object o) {
