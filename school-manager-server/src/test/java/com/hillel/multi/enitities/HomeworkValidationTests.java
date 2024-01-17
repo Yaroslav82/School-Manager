@@ -1,4 +1,4 @@
-package com.hillel.multi.unit;
+package com.hillel.multi.enitities;
 
 import com.hillel.multi.persistent.entities.Homework;
 import jakarta.validation.ConstraintViolation;
