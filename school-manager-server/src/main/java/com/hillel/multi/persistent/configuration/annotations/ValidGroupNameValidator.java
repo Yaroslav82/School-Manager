@@ -1,4 +1,4 @@
-package com.hillel.multi.persistent.annotations;
+package com.hillel.multi.persistent.configuration.annotations;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

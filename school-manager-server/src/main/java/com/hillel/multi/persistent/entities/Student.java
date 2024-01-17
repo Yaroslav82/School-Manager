@@ -1,6 +1,6 @@
 package com.hillel.multi.persistent.entities;
 
-import com.hillel.multi.persistent.annotations.ValidGroupName;
+import com.hillel.multi.persistent.configuration.annotations.ValidGroupName;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
