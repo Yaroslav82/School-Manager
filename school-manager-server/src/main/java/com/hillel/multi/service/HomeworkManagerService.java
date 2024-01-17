@@ -1,6 +1,6 @@
 package com.hillel.multi.service;
 
-import com.hillel.model.Homework;
+import com.hillel.model.HomeworkModel;
 import com.hillel.multi.configuration.exceptions.MediaTypeException;
 import com.hillel.multi.configuration.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
@@ -11,25 +11,25 @@ import java.util.Objects;
 @Service
 public class HomeworkManagerService {
 
-    public List<Homework> getHomework(String group, String subject) {
+    public List<HomeworkModel> getHomework(String group, String subject) {
         return null;
     }
 
-    public Homework addHomework(Homework homework) {
+    public HomeworkModel addHomework(HomeworkModel homeworkModel) {
         // Example of using exception
-        if (Objects.isNull(homework.getName())) {
+        if (Objects.isNull(homeworkModel.getName())) {
             throw new MediaTypeException("Homework name can not be null");
         }
 
-        return homework;
+        return homeworkModel;
     }
 
-    public Homework updateHomework(Integer id, Homework homework) {
+    public HomeworkModel updateHomework(Integer id, HomeworkModel homeworkModel) {
         // Example of using exception
         if (id < 0) {
             throw new NotFoundException("Homework with id " + id + " is not found.");
         }
 
-        return homework;
+        return homeworkModel;
     }
 }

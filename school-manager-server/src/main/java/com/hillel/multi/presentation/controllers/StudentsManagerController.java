@@ -1,8 +1,8 @@
 package com.hillel.multi.presentation.controllers;
 
 import com.hillel.api.StudentsManagerApi;
-import com.hillel.model.Message;
-import com.hillel.model.Student;
+import com.hillel.model.MessageModel;
+import com.hillel.model.StudentModel;
 import com.hillel.multi.service.StudentsManagerService;
 import com.hillel.multi.service.utils.CallbackHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,22 +26,22 @@ public class StudentsManagerController implements StudentsManagerApi {
     private final static String SUCCESS_MSG = "Student was successfully created";
 
     @Override
-    public ResponseEntity<List<Student>> getStudents() {
-        List<Student> students = studentsManagerService.getStudents();
-        return new ResponseEntity<>(students, HttpStatus.OK);
+    public ResponseEntity<List<StudentModel>> getStudents() {
+        List<StudentModel> studentModels = studentsManagerService.getStudents();
+        return new ResponseEntity<>(studentModels, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Student> getStudentById(Integer id) {
-        Student student = studentsManagerService.getStudentById(id);
-        return ResponseEntity.ok(student);
+    public ResponseEntity<StudentModel> getStudentById(Integer id) {
+        StudentModel studentModel = studentsManagerService.getStudentById(id);
+        return ResponseEntity.ok(studentModel);
     }
 
     @Override
-    public ResponseEntity<Student> createStudent(Student student, URI xCallbackUrl) {
-        Student body = studentsManagerService.addStudent(student);
+    public ResponseEntity<StudentModel> createStudent(StudentModel studentModel, URI xCallbackUrl) {
+        StudentModel body = studentsManagerService.addStudent(studentModel);
         if (Objects.nonNull(xCallbackUrl)) {
-            Message message = new Message();
+            MessageModel message = new MessageModel();
             message.setText(SUCCESS_MSG);
             callbackHandler.sendCallback(message, xCallbackUrl);
         }
@@ -49,8 +49,8 @@ public class StudentsManagerController implements StudentsManagerApi {
     }
 
     @Override
-    public ResponseEntity<Student> updateStudent(Integer id, Student student) {
-        Student body = studentsManagerService.updateStudent(id, student);
+    public ResponseEntity<StudentModel> updateStudent(Integer id, StudentModel studentModel) {
+        StudentModel body = studentsManagerService.updateStudent(id, studentModel);
         return new ResponseEntity<>(body, HttpStatus.OK);
     }
 }

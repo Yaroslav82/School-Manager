@@ -1,7 +1,6 @@
 package com.hillel.multi.service.utils;
 
-import com.hillel.model.Message;
-import org.springframework.http.ResponseEntity;
+import com.hillel.model.MessageModel;
 import org.springframework.stereotype.Component;
 
 import java.net.URI;
@@ -12,7 +11,7 @@ import java.net.http.HttpResponse;
 @Component
 public class CallbackHandler {
 
-    public void sendCallback(Message message, URI callbackUrl) {
+    public void sendCallback(MessageModel message, URI callbackUrl) {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(callbackUrl)
