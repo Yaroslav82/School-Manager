@@ -1,6 +1,6 @@
 package com.hillel.multi.contract.base;
 
-import com.hillel.model.HomeworkModel;
+import com.hillel.model.HomeworkDTO;
 import com.hillel.multi.configuration.exceptions.MediaTypeException;
 import com.hillel.multi.configuration.exceptions.NotFoundException;
 import com.hillel.multi.presentation.controllers.HomeworkManagerController;
@@ -32,62 +32,62 @@ public class HomeworkManagerBase {
 
     @BeforeEach
     public void setUp() {
-        List<HomeworkModel> homeworkModels = getListOfHomework();
-        List<HomeworkModel> homeworksFiltered = getListOfHomework().stream()
+        List<HomeworkDTO> homeworkDTOS = getListOfHomework();
+        List<HomeworkDTO> homeworksFiltered = getListOfHomework().stream()
                 .filter(homeworkModel -> "GM-122".equals(homeworkModel.getGroup())).toList();
-        HomeworkModel homeworkModelPositive = getPositiveHomework();
-        HomeworkModel homeworkModelNegative = new HomeworkModel();
+        HomeworkDTO homeworkDTOPositive = getPositiveHomework();
+        HomeworkDTO homeworkDTONegative = new HomeworkDTO();
 
-        Mockito.doReturn(homeworkModels).when(homeworkManagerService).getHomework(null, null);
+        Mockito.doReturn(homeworkDTOS).when(homeworkManagerService).getHomework(null, null);
         Mockito.doReturn(homeworksFiltered).when(homeworkManagerService).getHomework("GM-122", null);
-        Mockito.doReturn(homeworkModelPositive).when(homeworkManagerService).addHomework(homeworkModelPositive);
-        Mockito.doThrow(new MediaTypeException()).when(homeworkManagerService).addHomework(homeworkModelNegative);
-        Mockito.doReturn(homeworkModelPositive).when(homeworkManagerService).updateHomework(1, homeworkModelPositive);
-        Mockito.doThrow(new NotFoundException()).when(homeworkManagerService).updateHomework(-1, homeworkModelPositive);
+        Mockito.doReturn(homeworkDTOPositive).when(homeworkManagerService).addHomework(homeworkDTOPositive);
+        Mockito.doThrow(new MediaTypeException()).when(homeworkManagerService).addHomework(homeworkDTONegative);
+        Mockito.doReturn(homeworkDTOPositive).when(homeworkManagerService).updateHomework(1, homeworkDTOPositive);
+        Mockito.doThrow(new NotFoundException()).when(homeworkManagerService).updateHomework(-1, homeworkDTOPositive);
         RestAssuredMockMvc.webAppContextSetup(context);
     }
 
-    private static HomeworkModel getPositiveHomework() {
-        HomeworkModel homeworkModel = new HomeworkModel();
-        homeworkModel.id(1);
-        homeworkModel.name("Homework №1");
-        homeworkModel.description("Read paragraph 48 and complete tasks 1, 2, 3");
-        homeworkModel.group("GM-122");
-        homeworkModel.subject("boolean_math");
-        homeworkModel.deadline("2024-01-23");
-        return homeworkModel;
+    private static HomeworkDTO getPositiveHomework() {
+        HomeworkDTO homeworkDto = new HomeworkDTO();
+        homeworkDto.id(1);
+        homeworkDto.name("Homework №1");
+        homeworkDto.description("Read paragraph 48 and complete tasks 1, 2, 3");
+        homeworkDto.group("GM-122");
+        homeworkDto.subject("boolean_math");
+        homeworkDto.deadline("2024-01-23");
+        return homeworkDto;
     }
 
-    private static List<HomeworkModel> getListOfHomework() {
-        List<HomeworkModel> homeworkModels = new ArrayList<>();
+    private static List<HomeworkDTO> getListOfHomework() {
+        List<HomeworkDTO> homeworkDTOS = new ArrayList<>();
 
-        HomeworkModel homeworkModel1 = new HomeworkModel();
-        homeworkModel1.id(1);
-        homeworkModel1.name("Homework №1");
-        homeworkModel1.description("Read paragraph 48 and complete tasks 1, 2, 3");
-        homeworkModel1.group("GM-122");
-        homeworkModel1.subject("boolean_math");
-        homeworkModel1.deadline("2024-01-23");
-        homeworkModels.add(homeworkModel1);
+        HomeworkDTO homeworkDTO1 = new HomeworkDTO();
+        homeworkDTO1.id(1);
+        homeworkDTO1.name("Homework №1");
+        homeworkDTO1.description("Read paragraph 48 and complete tasks 1, 2, 3");
+        homeworkDTO1.group("GM-122");
+        homeworkDTO1.subject("boolean_math");
+        homeworkDTO1.deadline("2024-01-23");
+        homeworkDTOS.add(homeworkDTO1);
 
-        HomeworkModel homeworkModel2 = new HomeworkModel();
-        homeworkModel2.id(2);
-        homeworkModel2.name("Homework №2");
-        homeworkModel2.description("Read paragraph 12");
-        homeworkModel2.group("GM-122");
-        homeworkModel2.subject("boolean_math");
-        homeworkModel2.deadline("2024-01-28");
-        homeworkModels.add(homeworkModel2);
+        HomeworkDTO homeworkDTO2 = new HomeworkDTO();
+        homeworkDTO2.id(2);
+        homeworkDTO2.name("Homework №2");
+        homeworkDTO2.description("Read paragraph 12");
+        homeworkDTO2.group("GM-122");
+        homeworkDTO2.subject("boolean_math");
+        homeworkDTO2.deadline("2024-01-28");
+        homeworkDTOS.add(homeworkDTO2);
 
-        HomeworkModel homeworkModel3 = new HomeworkModel();
-        homeworkModel3.id(3);
-        homeworkModel3.name("Homework №2");
-        homeworkModel3.description("Read paragraph 1");
-        homeworkModel3.group("EP-222");
-        homeworkModel3.subject("ai_programming");
-        homeworkModel3.deadline("2024-01-18");
-        homeworkModels.add(homeworkModel3);
+        HomeworkDTO homeworkDTO3 = new HomeworkDTO();
+        homeworkDTO3.id(3);
+        homeworkDTO3.name("Homework №2");
+        homeworkDTO3.description("Read paragraph 1");
+        homeworkDTO3.group("EP-222");
+        homeworkDTO3.subject("ai_programming");
+        homeworkDTO3.deadline("2024-01-18");
+        homeworkDTOS.add(homeworkDTO3);
 
-        return homeworkModels;
+        return homeworkDTOS;
     }
 }

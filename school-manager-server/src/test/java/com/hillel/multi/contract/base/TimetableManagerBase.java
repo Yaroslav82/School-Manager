@@ -1,6 +1,6 @@
 package com.hillel.multi.contract.base;
 
-import com.hillel.model.LessonModel;
+import com.hillel.model.LessonDTO;
 import com.hillel.multi.configuration.exceptions.MediaTypeException;
 import com.hillel.multi.configuration.exceptions.NotFoundException;
 import com.hillel.multi.presentation.controllers.TimetableManagerController;
@@ -32,55 +32,55 @@ public class TimetableManagerBase {
 
     @BeforeEach
     public void setUp() {
-        List<LessonModel> timetable = getListOfAllLessons();
-        List<LessonModel> timetableFiltered = getListOfAllLessons().stream()
+        List<LessonDTO> timetable = getListOfAllLessons();
+        List<LessonDTO> timetableFiltered = getListOfAllLessons().stream()
                 .filter(lessonModel -> "EP-222".equals(lessonModel.getGroup())).toList();
-        LessonModel positiveLessonModel = getPositiveLesson();
-        LessonModel negativeLessonModel = new LessonModel();
+        LessonDTO positiveLessonDTO = getPositiveLesson();
+        LessonDTO negativeLessonDTO = new LessonDTO();
 
         Mockito.doReturn(timetable).when(timetableManagerService).getLessons(null, null);
         Mockito.doReturn(timetableFiltered).when(timetableManagerService).getLessons("EP-222", null);
-        Mockito.doReturn(positiveLessonModel).when(timetableManagerService).addLesson(positiveLessonModel);
-        Mockito.doThrow(new MediaTypeException()).when(timetableManagerService).addLesson(negativeLessonModel);
-        Mockito.doReturn(positiveLessonModel).when(timetableManagerService).updateLesson(3, positiveLessonModel);
-        Mockito.doThrow(new NotFoundException()).when(timetableManagerService).updateLesson(-1, positiveLessonModel);
+        Mockito.doReturn(positiveLessonDTO).when(timetableManagerService).addLesson(positiveLessonDTO);
+        Mockito.doThrow(new MediaTypeException()).when(timetableManagerService).addLesson(negativeLessonDTO);
+        Mockito.doReturn(positiveLessonDTO).when(timetableManagerService).updateLesson(3, positiveLessonDTO);
+        Mockito.doThrow(new NotFoundException()).when(timetableManagerService).updateLesson(-1, positiveLessonDTO);
 
         RestAssuredMockMvc.webAppContextSetup(context);
     }
 
-    private static LessonModel getPositiveLesson() {
-        LessonModel lessonModel = new LessonModel();
-        lessonModel.id(3);
-        lessonModel.timestamp("2024-01-10 11:20:00");
-        lessonModel.group("RPA-123");
-        lessonModel.subject("boolean_math");
-        return lessonModel;
+    private static LessonDTO getPositiveLesson() {
+        LessonDTO lessonDTO = new LessonDTO();
+        lessonDTO.id(3);
+        lessonDTO.timestamp("2024-01-10 11:20:00");
+        lessonDTO.group("RPA-123");
+        lessonDTO.subject("boolean_math");
+        return lessonDTO;
     }
 
-    private static List<LessonModel> getListOfAllLessons() {
-        List<LessonModel> lessonModels = new ArrayList<>();
+    private static List<LessonDTO> getListOfAllLessons() {
+        List<LessonDTO> lessonDTOS = new ArrayList<>();
 
-        LessonModel lessonModel1 = new LessonModel();
-        lessonModel1.id(1);
-        lessonModel1.timestamp("2024-01-10 08:00:00");
-        lessonModel1.group("EP-222");
-        lessonModel1.subject("ai_programing");
-        lessonModels.add(lessonModel1);
+        LessonDTO lessonDTO1 = new LessonDTO();
+        lessonDTO1.id(1);
+        lessonDTO1.timestamp("2024-01-10 08:00:00");
+        lessonDTO1.group("EP-222");
+        lessonDTO1.subject("ai_programing");
+        lessonDTOS.add(lessonDTO1);
 
-        LessonModel lessonModel2 = new LessonModel();
-        lessonModel2.id(2);
-        lessonModel2.timestamp("2024-01-10 09:45:00");
-        lessonModel2.group("EP-222");
-        lessonModel2.subject("database_design");
-        lessonModels.add(lessonModel2);
+        LessonDTO lessonDTO2 = new LessonDTO();
+        lessonDTO2.id(2);
+        lessonDTO2.timestamp("2024-01-10 09:45:00");
+        lessonDTO2.group("EP-222");
+        lessonDTO2.subject("database_design");
+        lessonDTOS.add(lessonDTO2);
 
-        LessonModel lessonModel3 = new LessonModel();
-        lessonModel3.id(3);
-        lessonModel3.timestamp("2024-01-10 11:20:00");
-        lessonModel3.group("RPA-123");
-        lessonModel3.subject("boolean_math");
-        lessonModels.add(lessonModel3);
+        LessonDTO lessonDTO3 = new LessonDTO();
+        lessonDTO3.id(3);
+        lessonDTO3.timestamp("2024-01-10 11:20:00");
+        lessonDTO3.group("RPA-123");
+        lessonDTO3.subject("boolean_math");
+        lessonDTOS.add(lessonDTO3);
 
-        return lessonModels;
+        return lessonDTOS;
     }
 }

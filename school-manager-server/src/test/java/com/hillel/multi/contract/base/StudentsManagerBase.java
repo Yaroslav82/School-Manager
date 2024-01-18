@@ -1,6 +1,6 @@
 package com.hillel.multi.contract.base;
 
-import com.hillel.model.StudentModel;
+import com.hillel.model.StudentDTO;
 import com.hillel.multi.configuration.exceptions.MediaTypeException;
 import com.hillel.multi.configuration.exceptions.NotFoundException;
 import com.hillel.multi.presentation.controllers.StudentsManagerController;
@@ -37,54 +37,54 @@ public class StudentsManagerBase {
 
     @BeforeEach
     public void setUp() {
-        StudentModel studentModelNegative = new StudentModel();
-        StudentModel studentModelPositive = getPositiveStudent();
-        List<StudentModel> studentsList = getListOfStudents();
+        StudentDTO studentDTONegative = new StudentDTO();
+        StudentDTO studentDTOPositive = getPositiveStudent();
+        List<StudentDTO> studentsList = getListOfStudents();
 
         Mockito.doReturn(studentsList).when(studentsManagerService).getStudents();
-        Mockito.doReturn(studentModelPositive).when(studentsManagerService).getStudentById(1);
+        Mockito.doReturn(studentDTOPositive).when(studentsManagerService).getStudentById(1);
         Mockito.doThrow(new NotFoundException()).when(studentsManagerService).getStudentById(-1);
-        Mockito.doReturn(studentModelPositive).when(studentsManagerService).addStudent(studentModelPositive);
-        Mockito.doThrow(new MediaTypeException()).when(studentsManagerService).addStudent(studentModelNegative);
-        Mockito.doReturn(studentModelPositive).when(studentsManagerService).updateStudent(1, studentModelPositive);
-        Mockito.doThrow(new NotFoundException()).when(studentsManagerService).updateStudent(-1, studentModelPositive);
+        Mockito.doReturn(studentDTOPositive).when(studentsManagerService).addStudent(studentDTOPositive);
+        Mockito.doThrow(new MediaTypeException()).when(studentsManagerService).addStudent(studentDTONegative);
+        Mockito.doReturn(studentDTOPositive).when(studentsManagerService).updateStudent(1, studentDTOPositive);
+        Mockito.doThrow(new NotFoundException()).when(studentsManagerService).updateStudent(-1, studentDTOPositive);
 
         RestAssuredMockMvc.webAppContextSetup(context);
     }
 
-    private static StudentModel getPositiveStudent() {
-        StudentModel studentModel = new StudentModel();
-        studentModel.id(1);
-        studentModel.firstName("Luke");
-        studentModel.lastName("Skywalker");
-        studentModel.group("GM-122");
-        return studentModel;
+    private static StudentDTO getPositiveStudent() {
+        StudentDTO studentDTO = new StudentDTO();
+        studentDTO.id(1);
+        studentDTO.firstName("Luke");
+        studentDTO.lastName("Skywalker");
+        studentDTO.group("GM-122");
+        return studentDTO;
     }
 
-    private static List<StudentModel> getListOfStudents() {
-        List<StudentModel> studentModels = new ArrayList<>();
+    private static List<StudentDTO> getListOfStudents() {
+        List<StudentDTO> studentDTOS = new ArrayList<>();
 
-        StudentModel studentModel1 = new StudentModel();
-        studentModel1.id(1);
-        studentModel1.firstName("Luke");
-        studentModel1.lastName("Skywalker");
-        studentModel1.group("GM-122");
-        studentModels.add(studentModel1);
+        StudentDTO studentDTO1 = new StudentDTO();
+        studentDTO1.id(1);
+        studentDTO1.firstName("Luke");
+        studentDTO1.lastName("Skywalker");
+        studentDTO1.group("GM-122");
+        studentDTOS.add(studentDTO1);
 
-        StudentModel studentModel2 = new StudentModel();
-        studentModel2.id(2);
-        studentModel2.firstName("Han");
-        studentModel2.lastName("Solo");
-        studentModel2.group("GM-122");
-        studentModels.add(studentModel2);
+        StudentDTO studentDTO2 = new StudentDTO();
+        studentDTO2.id(2);
+        studentDTO2.firstName("Han");
+        studentDTO2.lastName("Solo");
+        studentDTO2.group("GM-122");
+        studentDTOS.add(studentDTO2);
 
-        StudentModel studentModel3 = new StudentModel();
-        studentModel3.id(3);
-        studentModel3.firstName("Dart");
-        studentModel3.lastName("Vader");
-        studentModel3.group("EP-222");
-        studentModels.add(studentModel3);
+        StudentDTO studentDTO3 = new StudentDTO();
+        studentDTO3.id(3);
+        studentDTO3.firstName("Dart");
+        studentDTO3.lastName("Vader");
+        studentDTO3.group("EP-222");
+        studentDTOS.add(studentDTO3);
 
-        return studentModels;
+        return studentDTOS;
     }
 }

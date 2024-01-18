@@ -40,7 +40,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/StudentModel"
+                  $ref: "#/components/schemas/StudentDTO"
         "500":
           $ref: "#/components/responses/500ServerError"
   "/students/get/{id}":
@@ -57,7 +57,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StudentModel"
+                $ref: "#/components/schemas/StudentDTO"
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
@@ -98,7 +98,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StudentModel"
+                $ref: "#/components/schemas/StudentDTO"
           links:
             GetStudentById:
               $ref: "#/components/links/GetStudentById"
@@ -122,7 +122,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StudentModel"
+                $ref: "#/components/schemas/StudentDTO"
           links:
             GetStudentById:
               $ref: "#/components/links/GetStudentById"
@@ -147,7 +147,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/LessonModel"
+                  $ref: "#/components/schemas/LessonDTO"
         "500":
           $ref: "#/components/responses/500ServerError"
   /timetable/add:
@@ -164,7 +164,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/LessonModel"
+                $ref: "#/components/schemas/LessonDTO"
           links:
             GetLesson:
               $ref: "#/components/links/GetLesson"
@@ -188,7 +188,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/LessonModel"
+                $ref: "#/components/schemas/LessonDTO"
           links:
             GetLesson:
               $ref: "#/components/links/GetLesson"
@@ -215,7 +215,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/HomeworkModel"
+                  $ref: "#/components/schemas/HomeworkDTO"
         "500":
           $ref: "#/components/responses/500ServerError"
   /homework/add:
@@ -232,7 +232,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/HomeworkModel"
+                $ref: "#/components/schemas/HomeworkDTO"
         "415":
           $ref: "#/components/responses/415UnsuppotedType"
         "500":
@@ -253,7 +253,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/HomeworkModel"
+                $ref: "#/components/schemas/HomeworkDTO"
         "404":
           $ref: "#/components/responses/404NotFound"
         "415":
@@ -262,7 +262,7 @@ paths:
           $ref: "#/components/responses/500ServerError"
 components:
   schemas:
-    StudentModel:
+    StudentDTO:
       type: object
       properties:
         id:
@@ -273,7 +273,7 @@ components:
           type: string
         group:
           type: string
-    LessonModel:
+    LessonDTO:
       type: object
       properties:
         id:
@@ -285,7 +285,7 @@ components:
           type: string
         subject:
           type: string
-    HomeworkModel:
+    HomeworkDTO:
       type: object
       properties:
         id:
@@ -344,7 +344,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/StudentModel"
+            $ref: "#/components/schemas/StudentDTO"
           examples:
             StudentBodyExample:
               $ref: "#/components/examples/StudentBody"
@@ -353,7 +353,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/LessonModel"
+            $ref: "#/components/schemas/LessonDTO"
           examples:
             LessonBodyExample:
               $ref: "#/components/examples/LessonBody"
@@ -362,7 +362,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/HomeworkModel"
+            $ref: "#/components/schemas/HomeworkDTO"
           examples:
             HomeworkBodyExample:
               $ref: "#/components/examples/HomeworkBody"

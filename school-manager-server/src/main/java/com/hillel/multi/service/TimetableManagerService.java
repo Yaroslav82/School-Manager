@@ -1,6 +1,6 @@
 package com.hillel.multi.service;
 
-import com.hillel.model.LessonModel;
+import com.hillel.model.LessonDTO;
 import com.hillel.multi.configuration.exceptions.MediaTypeException;
 import com.hillel.multi.configuration.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
@@ -11,25 +11,25 @@ import java.util.Objects;
 @Service
 public class TimetableManagerService {
 
-    public List<LessonModel> getLessons(String group, String subject) {
+    public List<LessonDTO> getLessons(String group, String subject) {
         return null;
     }
 
-    public LessonModel addLesson(LessonModel lessonModel) {
+    public LessonDTO addLesson(LessonDTO lessonDTO) {
         // Example of using exception
-        if (Objects.isNull(lessonModel.getSubject())) {
+        if (Objects.isNull(lessonDTO.getSubject())) {
             throw new MediaTypeException("Subject can not be null");
         }
 
-        return lessonModel;
+        return lessonDTO;
     }
 
-    public LessonModel updateLesson(Integer id, LessonModel lessonModel) {
+    public LessonDTO updateLesson(Integer id, LessonDTO lessonDTO) {
         // Example of using exception
         if (id < 0) {
             throw new NotFoundException("Lesson with id " + id + " is not found.");
         }
 
-        return lessonModel;
+        return lessonDTO;
     }
 }
