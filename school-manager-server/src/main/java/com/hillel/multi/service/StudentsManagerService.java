@@ -3,12 +3,16 @@ package com.hillel.multi.service;
 import com.hillel.model.StudentDTO;
 import com.hillel.multi.configuration.exceptions.MediaTypeException;
 import com.hillel.multi.configuration.exceptions.NotFoundException;
+import com.hillel.multi.persistent.entities.Student;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Objects;
 
 @Service
+@Validated
 public class StudentsManagerService {
 
     public List<StudentDTO> getStudents() {
@@ -40,5 +44,13 @@ public class StudentsManagerService {
         }
 
         return studentDTO;
+    }
+
+    public StudentDTO entityToDTO(@Valid Student student) {
+        return null;
+    }
+
+    public Student dtoToEntity(StudentDTO studentDto) {
+        return null;
     }
 }

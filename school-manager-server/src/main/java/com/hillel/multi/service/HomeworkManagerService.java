@@ -41,7 +41,7 @@ public class HomeworkManagerService {
         return null;
     }
 
-    public Homework entityToDTO(HomeworkDTO homeworkDTO) {
+    public Homework dtoToEntity(HomeworkDTO homeworkDto) {
         return null;
     }
 }
