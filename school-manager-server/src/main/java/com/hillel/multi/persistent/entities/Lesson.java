@@ -1,6 +1,9 @@
 package com.hillel.multi.persistent.entities;
 
+import com.hillel.multi.persistent.configuration.annotations.ValidGroupName;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,12 +25,15 @@ public class Lesson {
     private Integer id;
 
     @Column(name = "timestamp")
+    @Pattern(regexp = "^([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])) (2[0-3]|[0-1]?[\\d]):[0-5][\\d]:[0-5][\\d]$")
     private String timestamp;
 
     @Column(name = "group_name")
-    private String group;
+    @ValidGroupName
+    private String groupName;
 
     @Column(name = "subject")
+    @NotBlank
     private String subject;
 
     @Override
@@ -35,11 +41,11 @@ public class Lesson {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Lesson lesson = (Lesson) o;
-        return Objects.equals(timestamp, lesson.timestamp) && Objects.equals(group, lesson.group) && Objects.equals(subject, lesson.subject);
+        return Objects.equals(timestamp, lesson.timestamp) && Objects.equals(groupName, lesson.groupName) && Objects.equals(subject, lesson.subject);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(timestamp, group, subject);
+        return Objects.hash(timestamp, groupName, subject);
     }
 }

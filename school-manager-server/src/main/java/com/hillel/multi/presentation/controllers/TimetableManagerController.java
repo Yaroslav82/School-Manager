@@ -1,7 +1,7 @@
 package com.hillel.multi.presentation.controllers;
 
 import com.hillel.api.TimetableManagerApi;
-import com.hillel.model.Lesson;
+import com.hillel.model.LessonDTO;
 import com.hillel.multi.service.TimetableManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,20 +17,20 @@ public class TimetableManagerController implements TimetableManagerApi {
     private TimetableManagerService timetableManagerService;
 
     @Override
-    public ResponseEntity<List<Lesson>> getLessons(String group, String subject) {
-        List<Lesson> lessons = timetableManagerService.getLessons(group, subject);
-        return new ResponseEntity<>(lessons, HttpStatus.OK);
+    public ResponseEntity<List<LessonDTO>> getLessons(String group, String subject) {
+        List<LessonDTO> lessonDTOS = timetableManagerService.getLessons(group, subject);
+        return new ResponseEntity<>(lessonDTOS, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Lesson> addLesson(Lesson lesson) {
-        Lesson body = timetableManagerService.addLesson(lesson);
+    public ResponseEntity<LessonDTO> addLesson(LessonDTO lessonDTO) {
+        LessonDTO body = timetableManagerService.addLesson(lessonDTO);
         return new ResponseEntity<>(body, HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<Lesson> updateLesson(Integer id, Lesson lesson) {
-        Lesson body = timetableManagerService.updateLesson(id, lesson);
+    public ResponseEntity<LessonDTO> updateLesson(Integer id, LessonDTO lessonDTO) {
+        LessonDTO body = timetableManagerService.updateLesson(id, lessonDTO);
         return new ResponseEntity<>(body, HttpStatus.OK);
     }
 }
