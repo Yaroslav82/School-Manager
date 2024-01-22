@@ -1,0 +1,1 @@
+TRUNCATE TABLE homeworks, lessons, students CASCADE;
