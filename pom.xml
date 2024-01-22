@@ -26,6 +26,9 @@
         <openapi-generator-maven-plugin.version>6.6.0</openapi-generator-maven-plugin.version>
         <spring-cloud-contract-plugin.version>4.1.0</spring-cloud-contract-plugin.version>
         <spring-cloud.version>2023.0.0</spring-cloud.version>
+        <flyway-core.version>10.6.0</flyway-core.version>
+        <flyway-maven-plugin.version>10.6.0</flyway-maven-plugin.version>
+        <flyway-database-postgresql.version>10.6.0</flyway-database-postgresql.version>
     </properties>
 
     <modules>
@@ -82,6 +85,16 @@
                 <artifactId>springdoc-openapi-ui</artifactId>
                 <version>${springdoc-openapi-ui.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>${flyway-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-database-postgresql</artifactId>
+                <version>${flyway-database-postgresql.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -115,5 +128,45 @@
         </dependency>
         <!-- TEST SCOPE ENDS -->
     </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <configuration>
+                        <excludes>
+                            <exclude>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                            </exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-contract-maven-plugin</artifactId>
+                    <version>${spring-cloud-contract-plugin.version}</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <testFramework>JUNIT5</testFramework>
+                        <testMode>MOCKMVC</testMode>
+                        <packageWithBaseClasses>com.hillel.multi.contract.base</packageWithBaseClasses>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.flywaydb</groupId>
+                    <artifactId>flyway-maven-plugin</artifactId>
+                    <version>${flyway-maven-plugin.version}</version>
+                    <configuration>
+                        <url>jdbc:postgresql://localhost:5432/postgres</url>
+                        <user>postgres</user>
+                        <password>password</password>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
 </project>
