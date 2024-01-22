@@ -1,10 +1,11 @@
 package com.hillel.multi.service;
 
 import com.hillel.model.LessonDTO;
-import com.hillel.multi.configuration.exceptions.MediaTypeException;
 import com.hillel.multi.configuration.exceptions.NotFoundException;
 import com.hillel.multi.persistent.entities.Lesson;
+import com.hillel.multi.persistent.repositories.TimetableManagerRepository;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -15,29 +16,44 @@ import java.util.Objects;
 @Validated
 public class TimetableManagerService {
 
+    @Autowired
+    private TimetableManagerRepository timetableManagerRepository;
+
+    public LessonDTO getLessonsById(Integer id) {
+        Lesson entity = timetableManagerRepository.getLessonById(id.longValue());
+        if (Objects.nonNull(entity)) {
+            return entityToDTO(entity);
+        } else {
+            throw new NotFoundException("Lesson with id " + id + " is not found.");
+        }
+    }
+
     public List<LessonDTO> getLessons(String group, String subject) {
-        return null;
+        List<Lesson> lessons = timetableManagerRepository.getLessonsByGroupAndSubject(group, subject);
+        return entityToDTO(lessons);
     }
 
     public LessonDTO addLesson(LessonDTO lessonDTO) {
-        // Example of using exception
-        if (Objects.isNull(lessonDTO.getSubject())) {
-            throw new MediaTypeException("Subject can not be null");
-        }
-
-        return lessonDTO;
+        Lesson entity = timetableManagerRepository.save(dtoToEntity(lessonDTO));
+        return entityToDTO(entity);
     }
 
     public LessonDTO updateLesson(Integer id, LessonDTO lessonDTO) {
-        // Example of using exception
-        if (id < 0) {
-            throw new NotFoundException("Lesson with id " + id + " is not found.");
-        }
+        LessonDTO existingLesson = getLessonsById(id);
 
-        return lessonDTO;
+        lessonDTO.setId(id);
+        if (lessonDTO.getGroup() == null) lessonDTO.setGroup(existingLesson.getGroup());
+        if (lessonDTO.getSubject() == null) lessonDTO.setSubject(existingLesson.getSubject());
+        if (lessonDTO.getTimestamp() == null) lessonDTO.setTimestamp(existingLesson.getTimestamp());
+
+        return addLesson(lessonDTO);
     }
 
     public LessonDTO entityToDTO(@Valid Lesson lesson) {
+        return null;
+    }
+
+    public List<LessonDTO> entityToDTO(@Valid List<Lesson> lessons) {
         return null;
     }
 
