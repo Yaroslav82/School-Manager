@@ -25,12 +25,7 @@ public class StudentsManagerService {
     }
 
     public StudentDTO getStudentById(Integer id) {
-        Student entity = studentManagerRepository.getStudentById(id.longValue());
-        if (Objects.nonNull(entity)) {
-            return entityToDTO(entity);
-        } else {
-            throw new NotFoundException("Student with id " + id + " is not found.");
-        }
+        return entityToDTO(getEntityById(id));
     }
 
     public StudentDTO addStudent(StudentDTO studentDTO) {
@@ -39,14 +34,9 @@ public class StudentsManagerService {
     }
 
     public StudentDTO updateStudent(Integer id, StudentDTO studentDTO) {
-        StudentDTO existingStudent = getStudentById(id);
+        Student entity = getEntityById(id);
 
-        studentDTO.setId(id);
-        if (studentDTO.getFirstName() == null) studentDTO.setFirstName(existingStudent.getFirstName());
-        if (studentDTO.getLastName() == null) studentDTO.setLastName(existingStudent.getLastName());
-        if (studentDTO.getGroup() == null) studentDTO.setGroup(existingStudent.getGroup());
-
-        return addStudent(studentDTO);
+        return entityToDTO(studentManagerRepository.save(entity));
     }
 
     public StudentDTO entityToDTO(@Valid Student student) {
@@ -60,5 +50,14 @@ public class StudentsManagerService {
     @Valid
     public Student dtoToEntity(StudentDTO studentDto) {
         return null;
+    }
+
+    private Student getEntityById(Integer id) {
+        Student entity = studentManagerRepository.getStudentById(id.longValue());
+        if (Objects.nonNull(entity)) {
+            return entity;
+        } else {
+            throw new NotFoundException("Student with id " + id + " is not found.");
+        }
     }
 }

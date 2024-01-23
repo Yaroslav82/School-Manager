@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,15 +18,6 @@ public class HomeworkManagerService {
 
     @Autowired
     private HomeworkManagerRepository homeworkManagerRepository;
-
-    public HomeworkDTO getHomeworkById(Integer id) {
-        Homework entity = homeworkManagerRepository.getHomeworkById(id.longValue());
-        if (Objects.nonNull(entity)) {
-            return entityToDTO(entity);
-        } else {
-            throw new NotFoundException("Homework with id " + id + " is not found.");
-        }
-    }
 
     public List<HomeworkDTO> getHomework(String group, String subject) {
         List<Homework> homeworkList = homeworkManagerRepository.getHomeworkByGroupAndSubject(group, subject);
@@ -40,16 +30,9 @@ public class HomeworkManagerService {
     }
 
     public HomeworkDTO updateHomework(Integer id, HomeworkDTO homeworkDto) {
-        HomeworkDTO existingHomework = getHomeworkById(id);
+        Homework entity = getEntityById(id);
 
-        homeworkDto.setId(id);
-        if (homeworkDto.getName() == null) homeworkDto.setName(existingHomework.getName());
-        if (homeworkDto.getDescription() == null) homeworkDto.setDescription(existingHomework.getDescription());
-        if (homeworkDto.getSubject() == null) homeworkDto.setSubject(existingHomework.getSubject());
-        if (homeworkDto.getGroup() == null) homeworkDto.setGroup(existingHomework.getGroup());
-        if (homeworkDto.getDeadline() == null) homeworkDto.setDeadline(existingHomework.getDeadline());
-
-        return addHomework(homeworkDto);
+        return entityToDTO(homeworkManagerRepository.save(entity));
     }
 
     public HomeworkDTO entityToDTO(@Valid Homework homework) {
@@ -57,19 +40,20 @@ public class HomeworkManagerService {
     }
 
     public List<HomeworkDTO> entityToDTO(List<@Valid Homework> homework) {
-        return new ArrayList<>();
+        return null;
     }
-
 
     @Valid
     public Homework dtoToEntity(HomeworkDTO homeworkDto) {
-        Homework entity = new Homework();
-        entity.setId(homeworkDto.getId());
-        entity.setName(homeworkDto.getName());
-        entity.setDescription(homeworkDto.getDescription());
-        entity.setSubject(homeworkDto.getSubject());
-        entity.setGroupName(homeworkDto.getGroup());
-        entity.setDeadline(homeworkDto.getDeadline());
-        return entity;
+        return null;
+    }
+
+    private Homework getEntityById(Integer id) {
+        Homework entity = homeworkManagerRepository.getHomeworkById(id.longValue());
+        if (Objects.nonNull(entity)) {
+            return entity;
+        } else {
+            throw new NotFoundException("Homework with id " + id + " is not found.");
+        }
     }
 }

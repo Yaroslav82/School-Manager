@@ -19,15 +19,6 @@ public class TimetableManagerService {
     @Autowired
     private TimetableManagerRepository timetableManagerRepository;
 
-    public LessonDTO getLessonsById(Integer id) {
-        Lesson entity = timetableManagerRepository.getLessonById(id.longValue());
-        if (Objects.nonNull(entity)) {
-            return entityToDTO(entity);
-        } else {
-            throw new NotFoundException("Lesson with id " + id + " is not found.");
-        }
-    }
-
     public List<LessonDTO> getLessons(String group, String subject) {
         List<Lesson> lessons = timetableManagerRepository.getLessonsByGroupAndSubject(group, subject);
         return entityToDTO(lessons);
@@ -39,14 +30,9 @@ public class TimetableManagerService {
     }
 
     public LessonDTO updateLesson(Integer id, LessonDTO lessonDTO) {
-        LessonDTO existingLesson = getLessonsById(id);
+        Lesson entity = getEntityById(id);
 
-        lessonDTO.setId(id);
-        if (lessonDTO.getGroup() == null) lessonDTO.setGroup(existingLesson.getGroup());
-        if (lessonDTO.getSubject() == null) lessonDTO.setSubject(existingLesson.getSubject());
-        if (lessonDTO.getTimestamp() == null) lessonDTO.setTimestamp(existingLesson.getTimestamp());
-
-        return addLesson(lessonDTO);
+        return entityToDTO(timetableManagerRepository.save(entity));
     }
 
     public LessonDTO entityToDTO(@Valid Lesson lesson) {
@@ -59,5 +45,14 @@ public class TimetableManagerService {
 
     public Lesson dtoToEntity(LessonDTO lessonDto) {
         return null;
+    }
+
+    private Lesson getEntityById(Integer id) {
+        Lesson entity = timetableManagerRepository.getLessonById(id.longValue());
+        if (Objects.nonNull(entity)) {
+            return entity;
+        } else {
+            throw new NotFoundException("Lesson with id " + id + " is not found.");
+        }
     }
 }
