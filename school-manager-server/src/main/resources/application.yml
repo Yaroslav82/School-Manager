@@ -1,0 +1,17 @@
+spring:
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: password
+  jpa:
+    ddl-auto: create-drop
+    show-sql: true
+    spring.jpa.database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  config:
+    use-legacy-processing: true
+    spring.jpa.database-platform: org.hibernate.dialect.PostgreSQLDialect

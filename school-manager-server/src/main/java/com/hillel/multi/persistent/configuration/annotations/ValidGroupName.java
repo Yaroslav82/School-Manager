@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface ValidGroupName {
 
-    String message() default "Invalid group name format";
+    String message() default "неправильный формат";
 
     Class<?>[] groups() default {};
 
