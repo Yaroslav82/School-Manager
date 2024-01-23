@@ -4,6 +4,7 @@ import com.hillel.model.StudentDTO;
 import com.hillel.multi.configuration.exceptions.NotFoundException;
 import com.hillel.multi.persistent.entities.Student;
 import com.hillel.multi.persistent.repositories.StudentManagerRepository;
+import com.hillel.multi.service.mappers.StudentMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,21 +36,21 @@ public class StudentsManagerService {
 
     public StudentDTO updateStudent(Integer id, StudentDTO studentDTO) {
         Student entity = getEntityById(id);
-
+        StudentMapper.INSTANCE.updateIntoStudent(entity, studentDTO);
         return entityToDTO(studentManagerRepository.save(entity));
     }
 
     public StudentDTO entityToDTO(@Valid Student student) {
-        return null;
+        return StudentMapper.INSTANCE.studentToDto(student);
     }
 
     public List<StudentDTO> entityToDTO(List<@Valid Student> students) {
-        return null;
+        return StudentMapper.INSTANCE.studentsToDto(students);
     }
 
     @Valid
     public Student dtoToEntity(StudentDTO studentDto) {
-        return null;
+        return StudentMapper.INSTANCE.dtoToStudent(studentDto);
     }
 
     private Student getEntityById(Integer id) {
