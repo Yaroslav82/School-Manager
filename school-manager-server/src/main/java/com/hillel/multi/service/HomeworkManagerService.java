@@ -4,6 +4,7 @@ import com.hillel.model.HomeworkDTO;
 import com.hillel.multi.configuration.exceptions.NotFoundException;
 import com.hillel.multi.persistent.entities.Homework;
 import com.hillel.multi.persistent.repositories.HomeworkManagerRepository;
+import com.hillel.multi.service.mappers.HomeworkMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,21 +32,21 @@ public class HomeworkManagerService {
 
     public HomeworkDTO updateHomework(Integer id, HomeworkDTO homeworkDto) {
         Homework entity = getEntityById(id);
-
+        HomeworkMapper.INSTANCE.updateIntoHomework(entity, homeworkDto);
         return entityToDTO(homeworkManagerRepository.save(entity));
     }
 
     public HomeworkDTO entityToDTO(@Valid Homework homework) {
-        return null;
+        return HomeworkMapper.INSTANCE.homeworkToDto(homework);
     }
 
     public List<HomeworkDTO> entityToDTO(List<@Valid Homework> homework) {
-        return null;
+        return HomeworkMapper.INSTANCE.homeworksToDto(homework);
     }
 
     @Valid
     public Homework dtoToEntity(HomeworkDTO homeworkDto) {
-        return null;
+        return HomeworkMapper.INSTANCE.dtoToHomework(homeworkDto);
     }
 
     private Homework getEntityById(Integer id) {
