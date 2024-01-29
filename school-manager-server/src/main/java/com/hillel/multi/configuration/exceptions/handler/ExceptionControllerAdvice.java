@@ -1,4 +1,4 @@
-package com.hillel.multi.configuration.handler;
+package com.hillel.multi.configuration.exceptions.handler;
 
 import com.hillel.multi.configuration.exceptions.ErrorDetails;
 import com.hillel.multi.configuration.exceptions.InternalServerException;
