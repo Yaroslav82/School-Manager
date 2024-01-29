@@ -27,9 +27,8 @@
         <spring-cloud-contract-plugin.version>4.1.0</spring-cloud-contract-plugin.version>
         <spring-cloud.version>2023.0.0</spring-cloud.version>
         <flyway-core.version>10.6.0</flyway-core.version>
-        <flyway-maven-plugin.version>10.6.0</flyway-maven-plugin.version>
+        <flyway-maven-plugin.version>9.20.0</flyway-maven-plugin.version>
         <flyway-database-postgresql.version>10.6.0</flyway-database-postgresql.version>
-        <org.postgresql.version>42.7.1</org.postgresql.version>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <io.jsonwebtoken.version>0.12.3</io.jsonwebtoken.version>
@@ -112,12 +111,11 @@
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
-                <version>${org.postgresql.version}</version>
+                <version>42.7.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
-    <!-- In order not to define all the dependencies in each child pom, I defined them in the parent pom -->
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -146,6 +144,11 @@
             <artifactId>junit-platform-suite</artifactId>
         </dependency>
         <!-- TEST SCOPE ENDS -->
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -179,6 +182,7 @@
                     <artifactId>flyway-maven-plugin</artifactId>
                     <version>${flyway-maven-plugin.version}</version>
                     <configuration>
+                        <driver>org.postgresql.Driver</driver>
                         <url>jdbc:postgresql://localhost:5432/postgres</url>
                         <user>postgres</user>
                         <password>password</password>
@@ -210,6 +214,13 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
 
 </project>
