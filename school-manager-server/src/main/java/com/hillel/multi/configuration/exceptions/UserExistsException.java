@@ -4,15 +4,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-public class InternalServerException extends RuntimeException {
+public class UserExistsException extends RuntimeException {
 
-    private final static String DEFAULT_RESPONSE_MESSAGE = "The server encountered an unexpected error while processing the request.";
+    private final static String DEFAULT_RESPONSE_MESSAGE = "A user with the same username already exists.";
 
-    public InternalServerException() {
+    public UserExistsException() {
         super(DEFAULT_RESPONSE_MESSAGE);
     }
 
-    public InternalServerException(String message) {
+    public UserExistsException(String message) {
         super(message);
     }
 }
