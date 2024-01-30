@@ -1,5 +1,6 @@
 package com.hillel.multi.service;
 
+import com.hillel.model.JwtRequest;
 import com.hillel.model.UserDTO;
 import com.hillel.multi.configuration.exceptions.NotFoundException;
 import com.hillel.multi.configuration.exceptions.UserExistsException;
@@ -37,12 +38,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("User %s not found", username)));
     }
 
-    public UserDTO createNewUser(UserDTO userDto) {
-        if (userRepository.getByUsername(userDto.getUsername()).isPresent()) {
+    public UserDTO createNewUser(JwtRequest jwtRequest) {
+        if (userRepository.getByUsername(jwtRequest.getUsername()).isPresent()) {
             throw new UserExistsException();
         }
-        User user = UserMapper.INSTANCE.dtoToUser(userDto);
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        User user = new User();
+        user.setUsername(jwtRequest.getUsername());
+        user.setPassword(passwordEncoder.encode(jwtRequest.getPassword()));
         user.setRoles(Set.of(roleService.getStudentRole()));
         return UserMapper.INSTANCE.userToDto(userRepository.save(user));
     }
@@ -53,11 +55,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     public UserDTO updateUserRole(Integer id, String roleName) {
-        Role role = roleService.getRoleByName(roleName).orElseThrow(
-                () -> new NotFoundException(String.format("Role %s is not found", roleName))
-        );
+        Role role = roleService.getRoleByName(roleName);
         User user = getUserById(id);
-        user.setRoles(Set.of(role));
+        user.getRoles().clear();
+        user.getRoles().add(role);
         return UserMapper.INSTANCE.userToDto(userRepository.save(user));
     }
 
