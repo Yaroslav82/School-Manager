@@ -40,8 +40,8 @@ public class AuthController implements AuthenticationManagerApi {
     }
 
     @Override
-    public ResponseEntity<UserDTO> createNewUser(UserDTO userDTO) {
-        UserDTO body = userService.createNewUser(userDTO);
+    public ResponseEntity<UserDTO> createNewUser(JwtRequest jwtRequest) {
+        UserDTO body = userService.createNewUser(jwtRequest);
         return new ResponseEntity<>(body, HttpStatus.CREATED);
     }
 
