@@ -49,7 +49,7 @@ paths:
   /registration:
     post:
       requestBody:
-        $ref: "#/components/requestBodies/UserRequestBody"
+        $ref: "#/components/requestBodies/JwtRequestBody"
       tags:
         - AuthenticationManager
       description: Creates a new user
@@ -374,10 +374,16 @@ components:
     UserDTO:
       type: object
       properties:
+        id:
+          type: integer
         username:
           type: string
         password:
           type: string
+        roles:
+          type: array
+          items:
+            type: string
     StudentDTO:
       type: object
       properties:
@@ -459,12 +465,6 @@ components:
       description: |
         The server encountered an unexpected error while processing the request.
   requestBodies:
-    UserRequestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/UserDTO"
     JwtRequestBody:
       required: true
       content:
