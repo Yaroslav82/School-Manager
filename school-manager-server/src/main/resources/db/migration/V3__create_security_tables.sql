@@ -1,5 +1,5 @@
-create sequence users_seq start with 1 increment by 50;
-create sequence roles_seq start with 1 increment by 50;
+create sequence users_seq start with 2 increment by 50;
+create sequence roles_seq start with 4 increment by 50;
 create table users (id integer not null, username varchar(255), password varchar(255), primary key (id));
 create table roles (id integer not null, role_name varchar(255), primary key (id));
 
