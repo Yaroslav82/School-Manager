@@ -1,12 +1,13 @@
 package com.hillel.multi.service.mappers;
 
 import com.hillel.model.UserDTO;
+import com.hillel.multi.persistent.entities.Role;
 import com.hillel.multi.persistent.entities.User;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper
 public interface UserMapper {
@@ -15,8 +16,11 @@ public interface UserMapper {
 
     UserDTO userToDto(User user);
 
-    @Mapping(target = "password", ignore = true)
-    User dtoToUser(UserDTO userDTO);
-
     List<UserDTO> usersToDto(List<User> users);
+
+    List<String> rolesToString(Set<Role> value);
+
+    default String roleToString(Role role) {
+        return role != null ? role.getAuthority() : null;
+    }
 }
