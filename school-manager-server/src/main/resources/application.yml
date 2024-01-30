@@ -1,5 +1,5 @@
 jwt:
-  secret: asdlkjDSljh2e1hjlDSA14dKQOCYEASLKJ11e2dwa7iAYSHe32dnwqs8dwqhlj21e
+  secret: asdlkjDSljh2e1hjlDSA14dKQOCYEASLKJ11e2dwa7iAYSHe32dnwqs8dwqhlj21eASDSXXEEqewEEsad41214341
   lifetime: 10m
 spring:
   flyway:

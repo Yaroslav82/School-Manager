@@ -3,8 +3,6 @@ package com.hillel.multi.service.utils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,19 +24,19 @@ public class JwtTokenUtils {
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        Set<String> roleSet = userDetails.getAuthorities().stream()
+        List<String> roleSet = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
         claims.put("roles", roleSet);
 
         Date issuedDate = new Date();
         Date expiredDate = new Date(issuedDate.getTime() + jwtLifeTime.toMillis());
         return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(issuedDate)
-                .setExpiration(expiredDate)
-                .signWith(SignatureAlgorithm.HS256, secret)
+                .claims(claims)
+                .subject(userDetails.getUsername())
+                .issuedAt(issuedDate)
+                .expiration(expiredDate)
+                .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
                 .compact();
     }
 
@@ -46,16 +44,16 @@ public class JwtTokenUtils {
         return getAllClaims(token).getSubject();
     }
 
-    public Set<String> getRoles(String token) {
+    public List<String> getRoles(String token) {
         if (Objects.isNull(token)) {
             throw new JwtException("Token cannot be null");
         }
-        return getAllClaims(token).get("roles", Set.class);
+        return getAllClaims(token).get("roles", List.class);
     }
 
     private Claims getAllClaims(String token) {
         return Jwts.parser()
-                .verifyWith(Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret)))
+                .verifyWith(Keys.hmacShaKeyFor(secret.getBytes()))
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
