@@ -9,6 +9,7 @@ import jakarta.validation.ConstraintViolationException;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -17,10 +18,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
 
-    @ExceptionHandler(JwtException.class)
-    public final ResponseEntity<ErrorDetails> handleJwtException(JwtException ex) {
-        ErrorDetails errorDetails = new ErrorDetails(ex.getMessage(), HttpStatus.UNAUTHORIZED.value());
-        return new ResponseEntity<>(errorDetails, HttpStatus.UNAUTHORIZED);
+    @ExceptionHandler({JwtException.class, AccessDeniedException.class})
+    public final ResponseEntity<ErrorDetails> handleJwtException(Exception ex) {
+        ErrorDetails errorDetails = new ErrorDetails(ex.getMessage(), HttpStatus.FORBIDDEN.value());
+        return new ResponseEntity<>(errorDetails, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(BadCredentialsException.class)

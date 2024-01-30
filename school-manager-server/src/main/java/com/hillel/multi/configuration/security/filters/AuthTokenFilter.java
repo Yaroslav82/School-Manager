@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,13 +34,14 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorisation");
         String username = null;
         String jwtToken = null;
-        if (Objects.nonNull(authHeader) && authHeader.startsWith("Bearer ")) {
-            jwtToken = authHeader.substring(7);
-            username = jwtTokenUtils.getUsername(jwtToken);
-        }
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            try {
+        try {
+            if (Objects.nonNull(authHeader) && authHeader.startsWith("Bearer ")) {
+                jwtToken = authHeader.substring(7);
+                username = jwtTokenUtils.getUsername(jwtToken);
+            }
+
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                         username,
                         null,
@@ -47,11 +49,12 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 );
                 token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(token);
-            } catch (JwtException ex) {
-                handlerExceptionResolver.resolveException(request, response, null, ex);
             }
+            filterChain.doFilter(request, response);
+        } catch (JwtException | AccessDeniedException ex) {
+            handlerExceptionResolver.resolveException(request, response, null, ex);
         }
-        filterChain.doFilter(request, response);
+
     }
 
 }
