@@ -1,6 +1,7 @@
 package com.hillel.multi.contract.base;
 
 import com.hillel.model.StudentDTO;
+import com.hillel.multi.configuration.TestSecurityConfig;
 import com.hillel.multi.configuration.exceptions.MediaTypeException;
 import com.hillel.multi.configuration.exceptions.NotFoundException;
 import com.hillel.multi.presentation.controllers.StudentsManagerController;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import java.util.List;
 
 @WebMvcTest(controllers = StudentsManagerController.class)
 @AutoConfigureMockMvc
+@ContextConfiguration(classes = TestSecurityConfig.class)
 public class StudentsManagerBase {
 
     @Autowired
