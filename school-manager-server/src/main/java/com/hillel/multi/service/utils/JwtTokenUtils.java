@@ -22,6 +22,13 @@ public class JwtTokenUtils {
     @Value("${jwt.lifetime}")
     private Duration jwtLifeTime;
 
+    public String getTokenFromHeader(String authHeader) {
+        if (Objects.nonNull(authHeader) && authHeader.startsWith("Bearer ")) {
+            return authHeader.substring(7);
+        }
+        return null;
+    }
+
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         List<String> roleSet = userDetails.getAuthorities().stream()

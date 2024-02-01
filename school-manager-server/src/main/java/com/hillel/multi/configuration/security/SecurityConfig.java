@@ -1,6 +1,6 @@
 package com.hillel.multi.configuration.security;
 
-import com.hillel.multi.configuration.security.filters.AuthTokenFilter;
+import com.hillel.multi.configuration.security.filters.TokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     @Autowired
-    private AuthTokenFilter authFilter;
+    private TokenFilter tokenFilter;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -52,7 +52,7 @@ public class SecurityConfig {
                 )
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
-                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

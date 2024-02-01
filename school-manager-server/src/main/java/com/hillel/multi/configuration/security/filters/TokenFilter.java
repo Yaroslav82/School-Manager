@@ -17,11 +17,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
-public class AuthTokenFilter extends OncePerRequestFilter {
+public class TokenFilter extends OncePerRequestFilter {
 
     @Autowired
     private JwtTokenUtils jwtTokenUtils;
@@ -32,15 +31,13 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorisation");
+        String jwtToken = jwtTokenUtils.getTokenFromHeader(authHeader);
         String username = null;
-        String jwtToken = null;
 
         try {
-            if (Objects.nonNull(authHeader) && authHeader.startsWith("Bearer ")) {
-                jwtToken = authHeader.substring(7);
+            if (jwtToken != null) {
                 username = jwtTokenUtils.getUsername(jwtToken);
             }
-
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                         username,
