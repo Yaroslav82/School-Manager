@@ -25,7 +25,104 @@ tags:
     description: Api to manage lessons timetable
   - name: HomeworkManager
     description: Api to manage homework
+  - name: AuthenticationManager
+    description: Api to login and sign in
 paths:
+  /auth:
+    post:
+      requestBody:
+        $ref: "#/components/requestBodies/JwtRequestBody"
+      tags:
+        - AuthenticationManager
+      description: Returns a jwt token if user is authorised
+      operationId: authUser
+      responses:
+        "200":
+          description: A jwt token as a string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JwtResponse"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+
+  /registration:
+    post:
+      requestBody:
+        $ref: "#/components/requestBodies/JwtRequestBody"
+      tags:
+        - AuthenticationManager
+      description: Creates a new user
+      operationId: createNewUser
+      responses:
+        "201":
+          description: User successfully created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDTO"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+
+  /users/get:
+    get:
+      tags:
+        - AuthenticationManager
+      description: Returns a list of users
+      operationId: getUsers
+      responses:
+        "200":
+          description: A JSON array of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserDTO"
+
+  "/users/update-role/{id}":
+    put:
+      tags:
+        - AuthenticationManager
+      description: Update users role by id
+      operationId: updateUserRole
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                role:
+                  type: string
+      responses:
+        "200":
+          description: User updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDTO"
+        "400":
+          description: Incorrect role name
+        "404":
+          $ref: "#/components/responses/404NotFound"
+
+  "/users/delete/{id}":
+    delete:
+      tags:
+        - AuthenticationManager
+      description: Deletes user by id
+      operationId: deleteUser
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "200":
+          description: User deleted
+        "404":
+          $ref: "#/components/responses/404NotFound"
+
   /students/get:
     get:
       tags:
@@ -262,6 +359,31 @@ paths:
           $ref: "#/components/responses/500ServerError"
 components:
   schemas:
+    JwtRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    JwtResponse:
+      type: object
+      properties:
+        token:
+          type: string
+    UserDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        password:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
     StudentDTO:
       type: object
       properties:
@@ -331,6 +453,10 @@ components:
         type: string
         example: Math
   responses:
+    400BadRequest:
+      description: SomethingWentWrong
+    401Unauthorized:
+      description: Wrong username or password
     404NotFound:
       description: The specified resource was not found.
     415UnsuppotedType:
@@ -339,6 +465,12 @@ components:
       description: |
         The server encountered an unexpected error while processing the request.
   requestBodies:
+    JwtRequestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/JwtRequest"
     StudentRequestBody:
       required: true
       content:

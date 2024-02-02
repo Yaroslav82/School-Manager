@@ -1,5 +1,6 @@
 package com.hillel.multi.service;
 
+import com.hillel.multi.configuration.TestSecurityConfig;
 import com.hillel.multi.persistent.entities.Lesson;
 import com.hillel.multi.persistent.repositories.TimetableManagerRepository;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
@@ -11,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
 @WebMvcTest(controllers = TimetableManagerService.class)
 @AutoConfigureMockMvc
+@ContextConfiguration(classes = TestSecurityConfig.class)
 public class TimetableManagerServiceTests {
 
     @Autowired
