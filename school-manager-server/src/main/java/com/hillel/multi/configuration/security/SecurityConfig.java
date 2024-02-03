@@ -53,6 +53,7 @@ public class SecurityConfig {
                         .requestMatchers("/homework/update/**").hasRole("TEACHER")
 
                         .requestMatchers("/users/**").hasRole("ADMIN")
+                        .requestMatchers("/actuator/**").hasRole("ADMIN")
                 )
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
