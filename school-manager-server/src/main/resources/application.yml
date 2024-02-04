@@ -18,3 +18,20 @@ spring:
   config:
     use-legacy-processing: true
     spring.jpa.database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+management:
+  health:
+    livenessstate:
+      enabled: true
+    redinessstate:
+      enabled: true
+    memory:
+      enabled: true
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
