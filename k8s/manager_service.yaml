@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: school-manager-service
+  labels:
+    app: school-manager
+spec:
+  type: NodePort
+  selector:
+    app: school-manager
+  ports:
+    - name: school-manager-app-port
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30007
