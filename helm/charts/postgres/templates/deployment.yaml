@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: { { .Values.database.name } }
+spec:
+  replicas: { { .Values.database.replicaCount } }
+  selector:
+    matchLabels:
+      app: { { .Values.labels.app } }
+  template:
+    metadata:
+      labels:
+        app: { { .Values.labels.app } }
+    spec:
+      containers:
+        - name: { { .Values.database.name } }
+          image: { { .Values.database.image.repository } }:{{ .Values.database.image.tag }}
+          ports:
+              - containerPort: { { .Values.database.image.containerPort } }
+          envFrom:
+            - configMapRef:
+                name: postgres-config

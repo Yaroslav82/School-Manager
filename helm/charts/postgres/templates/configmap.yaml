@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: { { .Values.postgresConfig.name } }
+  labels:
+    app: { { .Values.labels.app } }
+data:
+  POSTGRES_DB: { { .Values.postgresConfig.POSTGRES_DB } }
+  POSTGRES_USER: { { .Values.postgresConfig.POSTGRES_USER } }
+  POSTGRES_PASSWORD: { { .Values.postgresConfig.POSTGRES_PASSWORD } }

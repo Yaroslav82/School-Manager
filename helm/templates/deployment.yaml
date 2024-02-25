@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: { { .Release.Name } }
+spec:
+  replicas: { { .Values.schoolManager.replicaCount } }
+  selector:
+    matchLabels:
+      app: { { .Values.labels.app } }
+  template:
+    metadata:
+      labels:
+        app: { { .Values.labels.app } }
+    spec:
+      containers:
+        - name: { { .Chart.Name } }
+          image: { { .Values.schoolManager.image.repository } }:{{ .Values.schoolManager.image.tag }}
+          imagePullPolicy: { { .Values.schoolManager.image.pullPolicy } }
+          ports:
+            - containerPort: { { .Values.service.port } }
+          env:
+            - name: "SPRING_DATASOURCE_URL"
+              value: "jdbc:postgresql://{{ .Values.postgres.service.name }}:5432/postgres"
