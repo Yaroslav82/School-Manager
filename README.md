@@ -1,26 +1,25 @@
-# java_enterprise_2023_11
+# SchoolManager
 
-# Знайомство
-Процес навчання
+SchoolManager is a simple REST microservice for managing information about students, homework, and courses. The project
+is implemented in the Java programming language.
 
-Проект "Шкільний менеджер"
+## Features
 
-Виконання дз. Дедлайни
+- Adding, editing, and deleting information about students, homework, and courses.
+- Viewing the list of students, homework, and courses, as well as their detailed information.
+- User registration and authentication.
 
-# Системи контролю версій
-GitHub. Git
+## Requirements
 
-Git vs VCS
+- Java 21 or higher
+- Maven
+- Docker
+- Kubernetes + Helm
 
-Переваги GitHub
+## Installation
 
-# GitHub
-Створення нового репозиторію
+1. Clone the repository:
 
-Файл .gitignore
-
-Додавання доступу до репозиторія
-
-Написання коммітів
-
-Пул-реквести
+```bash
+git clone https://github.com/Yaroslav82/School-Manager.git
+cd SchoolManager
