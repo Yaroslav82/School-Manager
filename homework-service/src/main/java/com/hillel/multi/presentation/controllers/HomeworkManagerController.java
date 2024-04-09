@@ -27,14 +27,14 @@ public class HomeworkManagerController implements HomeworkManagerApi {
 
     @Override
     public ResponseEntity<HomeworkDTO> addHomework(HomeworkDTO homeworkDto) {
-        log.info("Received request to add homework: {}", homeworkDto);
+        log.info("Received request to add homework");
         HomeworkDTO body = homeworkManagerService.addHomework(homeworkDto);
         return new ResponseEntity<>(body, HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<HomeworkDTO> updateHomework(Integer id, HomeworkDTO homeworkDto) {
-        log.info("Received request to update homework with id '{}' and payload: {}", id, homeworkDto);
+        log.info("Received request to update homework with id '{}'", id);
         HomeworkDTO body = homeworkManagerService.updateHomework(id, homeworkDto);
         return new ResponseEntity<>(body, HttpStatus.OK);
     }
