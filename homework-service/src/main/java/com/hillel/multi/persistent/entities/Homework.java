@@ -32,7 +32,8 @@ public class Homework {
     private String description;
 
     @Column(name = "group_name")
-//    @ValidGroupName
+    @Pattern(regexp = "^[A-Z]{2,3}-\\d+$", message = "Should be in format: \'NAME-123\'")
+    @NotBlank
     private String groupName;
 
     @Column(name = "subject")
@@ -40,7 +41,7 @@ public class Homework {
     private String subject;
 
     @Column(name = "deadline")
-    @Pattern(regexp = "^([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))$")
+    @Pattern(regexp = "^([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))$", message = "Should be in format: \'2023-12-23\'")
     @NotBlank
     private String deadline;
 
