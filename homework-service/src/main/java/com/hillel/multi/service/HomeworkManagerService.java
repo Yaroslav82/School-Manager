@@ -43,6 +43,12 @@ public class HomeworkManagerService {
         return entityToDTO(entity);
     }
 
+    public void deleteHomework(Integer id) {
+        Homework entity = getEntityById(id);
+        homeworkManagerRepository.delete(entity);
+        log.info("Homework with id '{}' was deleted", id);
+    }
+
     public HomeworkDTO entityToDTO(@Valid Homework homework) {
         return HomeworkMapper.INSTANCE.homeworkToDto(homework);
     }

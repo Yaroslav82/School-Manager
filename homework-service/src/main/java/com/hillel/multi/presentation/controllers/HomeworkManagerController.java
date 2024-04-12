@@ -38,4 +38,11 @@ public class HomeworkManagerController implements HomeworkManagerApi {
         HomeworkDTO body = homeworkManagerService.updateHomework(id, homeworkDto);
         return new ResponseEntity<>(body, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<Void> deleteHomework(Integer id) {
+        log.info("Received request to delete homework with id '{}'", id);
+        homeworkManagerService.deleteHomework(id);
+        return ResponseEntity.noContent().build();
+    }
 }
