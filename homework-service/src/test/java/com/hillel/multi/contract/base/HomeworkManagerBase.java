@@ -43,7 +43,9 @@ public class HomeworkManagerBase {
         Mockito.doReturn(homeworkDTOPositive).when(homeworkManagerService).addHomework(homeworkDTOPositive);
         Mockito.doThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST)).when(homeworkManagerService).addHomework(homeworkDTONegative);
         Mockito.doReturn(homeworkDTOPositive).when(homeworkManagerService).updateHomework(1, homeworkDTOPositive);
-        Mockito.doThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Homework with id -1 not found")).when(homeworkManagerService).updateHomework(-1, homeworkDTOPositive);
+        Mockito.doThrow(new ResponseStatusException(HttpStatus.NOT_FOUND)).when(homeworkManagerService).updateHomework(-1, homeworkDTOPositive);
+        Mockito.doNothing().when(homeworkManagerService).deleteHomework(1);
+        Mockito.doThrow(new ResponseStatusException(HttpStatus.NOT_FOUND)).when(homeworkManagerService).deleteHomework(-1);
         RestAssuredMockMvc.webAppContextSetup(context);
     }
 
