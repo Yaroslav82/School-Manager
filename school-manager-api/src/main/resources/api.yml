@@ -227,6 +227,22 @@ paths:
           $ref: "#/components/responses/404NotFound"
         "500":
           $ref: "#/components/responses/500ServerError"
+  "/students/delete/{id}":
+    delete:
+      tags:
+        - StudentsManager
+      description: Deletes student by id
+      operationId: deleteStudent
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "204":
+          description: Student was succesfully deleted
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerError"
+
   /timetable/get:
     get:
       tags:
@@ -295,6 +311,22 @@ paths:
           $ref: "#/components/responses/415UnsuppotedType"
         "500":
           $ref: "#/components/responses/500ServerError"
+  "/timetable/delete/{id}":
+    delete:
+      tags:
+        - TimetableManager
+      description: Deletes lesson by id
+      operationId: deleteLesson
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "204":
+          description: Lesson was succesfully deleted
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerError"
+
   /homework/get:
     get:
       tags:
@@ -355,6 +387,21 @@ paths:
           $ref: "#/components/responses/404NotFound"
         "415":
           $ref: "#/components/responses/415UnsuppotedType"
+        "500":
+          $ref: "#/components/responses/500ServerError"
+  "/homework/delete/{id}":
+    delete:
+      tags:
+        - HomeworkManager
+      description: Deletes homework by id
+      operationId: deleteHomework
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "204":
+          description: Homework was succesfully deleted
+        "404":
+          $ref: "#/components/responses/404NotFound"
         "500":
           $ref: "#/components/responses/500ServerError"
 components:
