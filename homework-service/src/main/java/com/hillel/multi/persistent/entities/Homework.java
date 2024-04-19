@@ -32,7 +32,7 @@ public class Homework {
     private String description;
 
     @Column(name = "group_name")
-    @Pattern(regexp = "^[A-Z]{2,3}-\\d+$", message = "Should be in format: \'NAME-123\'")
+    @Pattern(regexp = "^[A-Z]{2,3}-\\d+$", message = "Should be in format: \'GB-123\'")
     @NotBlank
     private String groupName;
 
