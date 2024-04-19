@@ -3,8 +3,8 @@ package com.hillel.multi.presentation.controllers;
 import com.hillel.api.HomeworkManagerApi;
 import com.hillel.model.HomeworkDTO;
 import com.hillel.multi.service.HomeworkManagerService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,9 +13,9 @@ import java.util.List;
 
 @RestController
 @Slf4j
+@AllArgsConstructor
 public class HomeworkManagerController implements HomeworkManagerApi {
 
-    @Autowired
     private HomeworkManagerService homeworkManagerService;
 
     @Override

@@ -5,8 +5,8 @@ import com.hillel.multi.persistent.entities.Homework;
 import com.hillel.multi.persistent.repositories.HomeworkManagerRepository;
 import com.hillel.multi.service.mappers.HomeworkMapper;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -18,9 +18,9 @@ import java.util.Optional;
 @Service
 @Slf4j
 @Validated
+@AllArgsConstructor
 public class HomeworkManagerService {
 
-    @Autowired
     private HomeworkManagerRepository homeworkManagerRepository;
 
     public List<HomeworkDTO> getHomework(String group, String subject) {
@@ -31,7 +31,7 @@ public class HomeworkManagerService {
 
     public HomeworkDTO addHomework(HomeworkDTO homeworkDto) {
         Homework entity = homeworkManagerRepository.save(dtoToEntity(homeworkDto));
-        log.info("Homework with id {} added", entity.getId());
+        log.info("Homework with id '{}' added", entity.getId());
         return entityToDTO(entity);
     }
 
@@ -49,16 +49,16 @@ public class HomeworkManagerService {
         log.info("Homework with id '{}' was deleted", id);
     }
 
-    public HomeworkDTO entityToDTO(@Valid Homework homework) {
+    private HomeworkDTO entityToDTO(@Valid Homework homework) {
         return HomeworkMapper.INSTANCE.homeworkToDto(homework);
     }
 
-    public List<HomeworkDTO> entityToDTO(List<@Valid Homework> homework) {
+    private List<HomeworkDTO> entityToDTO(List<@Valid Homework> homework) {
         return HomeworkMapper.INSTANCE.homeworksToDto(homework);
     }
 
     @Valid
-    public Homework dtoToEntity(HomeworkDTO homeworkDto) {
+    private Homework dtoToEntity(HomeworkDTO homeworkDto) {
         return HomeworkMapper.INSTANCE.dtoToHomework(homeworkDto);
     }
 
