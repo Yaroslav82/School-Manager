@@ -33,6 +33,7 @@
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <io.jsonwebtoken.version>0.12.3</io.jsonwebtoken.version>
         <org.potgresql.version>42.7.1</org.potgresql.version>
+        <org.testcontainers.version>1.19.7</org.testcontainers.version>
     </properties>
 
     <modules>
@@ -121,6 +122,19 @@
                 <artifactId>postgresql</artifactId>
                 <version>${org.potgresql.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>${org.testcontainers.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${org.testcontainers.version}</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -152,11 +166,6 @@
             <artifactId>junit-platform-suite</artifactId>
         </dependency>
         <!-- TEST SCOPE ENDS -->
-
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
@@ -222,13 +231,6 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-
-        <plugins>
-            <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
     </build>
 
 </project>
