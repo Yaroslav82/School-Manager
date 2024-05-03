@@ -203,6 +203,7 @@
                         <url>jdbc:postgresql://localhost:5432/postgres</url>
                         <user>postgres</user>
                         <password>password</password>
+                        <cleanDisabled>false</cleanDisabled>
                     </configuration>
                 </plugin>
                 <plugin>

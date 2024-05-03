@@ -19,7 +19,10 @@ import java.util.Objects;
 public class Homework {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "hw_seq",
+            sequenceName = "homeworks_seq",
+            initialValue = 50, allocationSize = 20)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "hw_seq")
     @Column(name = "id")
     private Integer id;
 
