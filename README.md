@@ -1,7 +1,6 @@
 # SchoolManager
 
-SchoolManager is a simple REST microservice for managing information about students, homework, and courses. The project
-is implemented in the Java programming language.
+SchoolManager is a REST microservice architecture designed to handle student, homework, and course information. Implemented in Java, it comprises multiple microservices working in tandem.
 
 ## Features
 
