@@ -1,31 +1,31 @@
 package com.hillel.multi.service;
 
 import com.hillel.model.StudentDTO;
-import com.hillel.multi.configuration.exceptions.NotFoundException;
 import com.hillel.multi.persistent.entities.Student;
 import com.hillel.multi.persistent.repositories.StudentManagerRepository;
 import com.hillel.multi.service.mappers.StudentMapper;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @Validated
+@AllArgsConstructor
 public class StudentsManagerService {
 
-    @Autowired
     private StudentManagerRepository studentManagerRepository;
 
     public List<StudentDTO> getStudents() {
-        List<Student> students = studentManagerRepository.getStudents();
+        List<Student> students = studentManagerRepository.findAll();
         return entityToDTO(students);
     }
 
-    public StudentDTO getStudentById(Integer id) {
+    public StudentDTO getStudentById(String id) {
         return entityToDTO(getEntityById(id));
     }
 
@@ -34,10 +34,15 @@ public class StudentsManagerService {
         return entityToDTO(entity);
     }
 
-    public StudentDTO updateStudent(Integer id, StudentDTO studentDTO) {
+    public StudentDTO updateStudent(String id, StudentDTO studentDTO) {
         Student entity = getEntityById(id);
         StudentMapper.INSTANCE.updateIntoStudent(entity, studentDTO);
         return entityToDTO(studentManagerRepository.save(entity));
+    }
+
+    public void deleteStudent(String id) {
+        Student entity = getEntityById(id);
+        studentManagerRepository.delete(entity);
     }
 
     public StudentDTO entityToDTO(@Valid Student student) {
@@ -53,12 +58,9 @@ public class StudentsManagerService {
         return StudentMapper.INSTANCE.dtoToStudent(studentDto);
     }
 
-    private Student getEntityById(Integer id) {
-        Student entity = studentManagerRepository.getStudentById(id.longValue());
-        if (Objects.nonNull(entity)) {
-            return entity;
-        } else {
-            throw new NotFoundException("Student with id " + id + " is not found.");
-        }
+    private Student getEntityById(String id) {
+        return studentManagerRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Student with id " + id + " not found")
+        );
     }
 }
