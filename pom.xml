@@ -37,12 +37,18 @@
 
     <modules>
         <module>school-manager-api</module>
-        <module>school-manager-server</module>
         <module>school-manager-coverage</module>
+        <module>students-service</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.hillel.multi</groupId>
+                <artifactId>school-manager-api</artifactId>
+                <version>${project.version}</version>
+                <scope>compile</scope>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -145,11 +151,6 @@
             <artifactId>junit-platform-suite</artifactId>
         </dependency>
         <!-- TEST SCOPE ENDS -->
-
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
@@ -215,13 +216,6 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-
-        <plugins>
-            <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
     </build>
 
 </project>
