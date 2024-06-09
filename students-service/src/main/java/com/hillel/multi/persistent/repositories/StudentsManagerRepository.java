@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface StudentManagerRepository extends MongoRepository<Student, String> {
+public interface StudentsManagerRepository extends MongoRepository<Student, String> {
 
     Optional<Student> findById(@NotNull String id);
 

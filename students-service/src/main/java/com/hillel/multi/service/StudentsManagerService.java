@@ -2,7 +2,7 @@ package com.hillel.multi.service;
 
 import com.hillel.model.StudentDTO;
 import com.hillel.multi.persistent.entities.Student;
-import com.hillel.multi.persistent.repositories.StudentManagerRepository;
+import com.hillel.multi.persistent.repositories.StudentsManagerRepository;
 import com.hillel.multi.service.mappers.StudentMapper;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -20,11 +20,11 @@ import java.util.List;
 @Slf4j
 public class StudentsManagerService {
 
-    private StudentManagerRepository studentManagerRepository;
+    private StudentsManagerRepository studentsManagerRepository;
 
     public List<StudentDTO> getStudents() {
         log.info("Getting students");
-        List<Student> students = studentManagerRepository.findAll();
+        List<Student> students = studentsManagerRepository.findAll();
         return entityToDTO(students);
     }
 
@@ -34,7 +34,7 @@ public class StudentsManagerService {
     }
 
     public StudentDTO addStudent(StudentDTO studentDTO) {
-        Student entity = studentManagerRepository.save(dtoToEntity(studentDTO));
+        Student entity = studentsManagerRepository.save(dtoToEntity(studentDTO));
         log.info("Student with id {} added", entity.getId());
         return entityToDTO(entity);
     }
@@ -42,14 +42,14 @@ public class StudentsManagerService {
     public StudentDTO updateStudent(String id, StudentDTO studentDTO) {
         Student entity = getEntityById(id);
         StudentMapper.INSTANCE.updateIntoStudent(entity, studentDTO);
-        entity = studentManagerRepository.save(entity);
+        entity = studentsManagerRepository.save(entity);
         log.info("Student with id '{}' updated", id);
         return entityToDTO(entity);
     }
 
     public void deleteStudent(String id) {
         Student entity = getEntityById(id);
-        studentManagerRepository.delete(entity);
+        studentsManagerRepository.delete(entity);
         log.info("Student with id '{}' was deleted", id);
     }
 
@@ -67,7 +67,7 @@ public class StudentsManagerService {
     }
 
     private Student getEntityById(String id) {
-        return studentManagerRepository.findById(id).orElseThrow(
+        return studentsManagerRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Student with id " + id + " not found")
         );
     }
