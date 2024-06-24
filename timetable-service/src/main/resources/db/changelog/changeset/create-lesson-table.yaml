@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-lesson
+      author: Yaroslav
+      changes:
+        - createTable:
+            tableName: lessons
+            columns:
+              - column:
+                  name: id
+                  type: INTEGER
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: subject
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: group_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
