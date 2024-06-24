@@ -7,12 +7,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TimetableManagerRepository extends JpaRepository<Lesson, Long> {
 
     @Query("SELECT l FROM Lesson l WHERE l.id = :id")
-    Lesson getLessonById(@Param("id") Long id);
+    Optional<Lesson> getLessonById(@Param("id") Long id);
 
     @Query("SELECT l FROM Lesson l WHERE (:groupName is null or l.groupName = :groupName) and " +
             "(:subject is null or l.subject = :subject)")
