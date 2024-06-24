@@ -37,8 +37,8 @@
 
     <modules>
         <module>school-manager-api</module>
-        <module>school-manager-server</module>
         <module>school-manager-coverage</module>
+        <module>timetable-service</module>
     </modules>
 
     <dependencyManagement>
@@ -145,11 +145,6 @@
             <artifactId>junit-platform-suite</artifactId>
         </dependency>
         <!-- TEST SCOPE ENDS -->
-
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
