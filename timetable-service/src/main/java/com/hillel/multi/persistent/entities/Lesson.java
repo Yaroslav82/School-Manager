@@ -1,6 +1,5 @@
 package com.hillel.multi.persistent.entities;
 
-import com.hillel.multi.persistent.configuration.annotations.ValidGroupName;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -20,7 +19,7 @@ import java.util.Objects;
 public class Lesson {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
@@ -29,7 +28,7 @@ public class Lesson {
     private String timestamp;
 
     @Column(name = "group_name")
-    @ValidGroupName
+    @Pattern(regexp = "^[A-Z]{2,3}-\\d+$", message = "Should be in format: \'GB-123\'")
     private String groupName;
 
     @Column(name = "subject")
