@@ -1,0 +1,12 @@
+spring:
+  liquibase:
+    enabled: true
+  datasource:
+    url: jdbc:mariadb://localhost:3306/test
+    username: user
+    password: password
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
