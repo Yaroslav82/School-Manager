@@ -147,7 +147,7 @@ paths:
       description: Returns a students by id
       operationId: getStudentById
       parameters:
-        - $ref: "#/components/parameters/IdParam"
+        - $ref: "#/components/parameters/IdStringParam"
       responses:
         "200":
           description: A JSON with student
@@ -210,7 +210,7 @@ paths:
       description: Update student by id
       operationId: updateStudent
       parameters:
-        - $ref: "#/components/parameters/IdParam"
+        - $ref: "#/components/parameters/IdStringParam"
       requestBody:
         $ref: "#/components/requestBodies/StudentRequestBody"
       responses:
@@ -227,6 +227,22 @@ paths:
           $ref: "#/components/responses/404NotFound"
         "500":
           $ref: "#/components/responses/500ServerError"
+  "/students/delete/{id}":
+    delete:
+      tags:
+        - StudentsManager
+      description: Deletes student by id
+      operationId: deleteStudent
+      parameters:
+        - $ref: "#/components/parameters/IdStringParam"
+      responses:
+        "204":
+          description: Student was succesfully deleted
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerError"
+
   /timetable/get:
     get:
       tags:
@@ -295,6 +311,22 @@ paths:
           $ref: "#/components/responses/415UnsuppotedType"
         "500":
           $ref: "#/components/responses/500ServerError"
+  "/timetable/delete/{id}":
+    delete:
+      tags:
+        - TimetableManager
+      description: Deletes lesson by id
+      operationId: deleteLesson
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "204":
+          description: Lesson was succesfully deleted
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerError"
+
   /homework/get:
     get:
       tags:
@@ -357,6 +389,21 @@ paths:
           $ref: "#/components/responses/415UnsuppotedType"
         "500":
           $ref: "#/components/responses/500ServerError"
+  "/homework/delete/{id}":
+    delete:
+      tags:
+        - HomeworkManager
+      description: Deletes homework by id
+      operationId: deleteHomework
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "204":
+          description: Homework was succesfully deleted
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerError"
 components:
   schemas:
     JwtRequest:
@@ -388,7 +435,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
         first_name:
           type: string
         last_name:
@@ -402,7 +449,6 @@ components:
           type: integer
         timestamp:
           type: string
-          pattern: '^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])) (2[0-3]|[0-1]?[\d]):[0-5][\d]:[0-5][\d]$'
         group:
           type: string
         subject:
@@ -422,7 +468,6 @@ components:
           type: string
         deadline:
           type: string
-          pattern: '^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$'
     MessageModel:
       type: object
       properties:
@@ -436,6 +481,13 @@ components:
       schema:
         type: integer
         example: 1
+    IdStringParam:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        example: abc12sd
     GroupParam:
       name: group
       in: query
@@ -502,7 +554,7 @@ components:
     StudentBody:
       summary: Student example
       value:
-        id: 10
+        id: "abc123"
         first_name: Luke
         last_name: Skywalker
         group: GM-122
