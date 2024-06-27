@@ -1,14 +1,14 @@
-package contracts.timetable.manager
+package contracts.students.manager
 
 import org.springframework.cloud.contract.spec.Contract
 
 Contract.make {
     description("""
-Represents a negative scenario of deleting lesson by id.
+Represents a negative scenario of getting student by id.
 """)
     request {
-        method 'DELETE'
-        url '/timetable/delete/-1'
+        method 'GET'
+        url '/students/get/-1'
     }
     response {
         status NOT_FOUND()
