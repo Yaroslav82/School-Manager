@@ -43,7 +43,8 @@ public class TimetableManagerService {
     }
 
     public void deleteLesson(Integer id) {
-        timetableManagerRepository.deleteById(Long.valueOf(id));
+        Lesson lesson = getEntityById(id);
+        timetableManagerRepository.delete(lesson);
         log.info("Lesson with id '{}' was deleted", id);
     }
 
