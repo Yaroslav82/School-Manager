@@ -1,0 +1,4 @@
+spring:
+  datasource:
+    url: jdbc:tc:mariadb:10.3.39:///test
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
