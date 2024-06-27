@@ -48,7 +48,6 @@
                 <groupId>com.hillel.multi</groupId>
                 <artifactId>school-manager-api</artifactId>
                 <version>${project.version}</version>
-                <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>

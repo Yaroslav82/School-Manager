@@ -10,12 +10,8 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-<<<<<<<< HEAD:students-service/pom.xml
     <artifactId>students-service</artifactId>
     <packaging>jar</packaging>
-========
-    <artifactId>timetable-service</artifactId>
->>>>>>>> origin/feature/microservice-for-lessons:timetable-service/pom.xml
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -25,51 +21,26 @@
 
     <dependencies>
         <dependency>
-<<<<<<<< HEAD:students-service/pom.xml
             <groupId>com.hillel.multi</groupId>
             <artifactId>school-manager-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
-========
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mariadb.jdbc</groupId>
-            <artifactId>mariadb-java-client</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
->>>>>>>> origin/feature/microservice-for-lessons:timetable-service/pom.xml
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
         </dependency>
         <dependency>
-<<<<<<<< HEAD:students-service/pom.xml
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
-========
-            <groupId>com.hillel.multi</groupId>
-            <artifactId>school-manager-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
->>>>>>>> origin/feature/microservice-for-lessons:timetable-service/pom.xml
         </dependency>
 
         <!--        TEST SCOPE STARTS      -->
         <dependency>
             <groupId>org.testcontainers</groupId>
-<<<<<<<< HEAD:students-service/pom.xml
             <artifactId>mongodb</artifactId>
-========
-            <artifactId>mariadb</artifactId>
->>>>>>>> origin/feature/microservice-for-lessons:timetable-service/pom.xml
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -95,19 +66,6 @@
                 <artifactId>spring-cloud-contract-maven-plugin</artifactId>
             </plugin>
             <plugin>
-<<<<<<<< HEAD:students-service/pom.xml
-========
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-maven-plugin</artifactId>
-                <configuration>
-                    <changeLogFile>./db/changelog/db.changelog-master.yaml</changeLogFile>
-                    <url>jdbc:mariadb://localhost:3306/test</url>
-                    <username>user</username>
-                    <password>password</password>
-                </configuration>
-            </plugin>
-            <plugin>
->>>>>>>> origin/feature/microservice-for-lessons:timetable-service/pom.xml
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
