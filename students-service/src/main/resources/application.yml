@@ -1,0 +1,5 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://mongo:password@localhost:27018/students?authSource=admin
+      auto-index-creation: true
