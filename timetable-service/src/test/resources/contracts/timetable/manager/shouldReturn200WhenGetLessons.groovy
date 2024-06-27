@@ -4,13 +4,14 @@ import org.springframework.cloud.contract.spec.Contract
 
 Contract.make {
     description("""
-Represents a negative scenario of deleting lesson by id.
+Represents a successful scenario of getting timetable.
 """)
     request {
-        method 'DELETE'
-        url '/timetable/delete/-1'
+        method 'GET'
+        url '/timetable/get'
     }
     response {
-        status NOT_FOUND()
+        status OK()
+        body(file('bodies/timetableAll.json'))
     }
 }

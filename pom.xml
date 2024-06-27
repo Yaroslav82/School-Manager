@@ -38,6 +38,7 @@
     <modules>
         <module>school-manager-api</module>
         <module>school-manager-coverage</module>
+        <module>timetable-service</module>
         <module>students-service</module>
     </modules>
 
