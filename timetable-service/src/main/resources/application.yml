@@ -2,7 +2,7 @@ spring:
   liquibase:
     enabled: true
   datasource:
-    url: jdbc:mariadb://localhost:3306/test
+    url: jdbc:mariadb://localhost:3306/timetable
     username: user
     password: password
     driver-class-name: org.mariadb.jdbc.Driver
